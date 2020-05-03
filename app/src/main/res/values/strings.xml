@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Sellermodule</string>
+
+    <string-array name="unitType_array">
+        <item>Kg</item>
+        <item>g</item>
+        <item>Litre</item>
+        <item>ML</item>
+        <item>Pieces</item>
+        <item>Units</item>
+    </string-array>
+</resources>

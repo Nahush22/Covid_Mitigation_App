@@ -1,0 +1,2 @@
+rootProject.name='Sellermodule'
+include ':app'
