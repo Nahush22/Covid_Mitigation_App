@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Sellermodule</string>
+    <string name="app_name">Covid19 MitiGATOR</string>
+    <string name="map_key" translatable="false">AIzaSyB707GrGuAJqY7AtL3seRljV30yV-vhmS8</string>
 
     <string-array name="unitType_array">
         <item>Kg</item>
@@ -9,4 +10,6 @@
         <item>Pieces</item>
         <item>Units</item>
     </string-array>
+    <string name="title_activity_finder">Map</string>
+    <string name="NotificationString">Service to monitor user location is running</string>
 </resources>

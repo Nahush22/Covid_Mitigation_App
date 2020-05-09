@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:113023971888:android:534aeea23a42ce40ba33f5",
+        "android_client_info": {
+          "package_name": "com.example.Covid19App"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113023971888-37tm41g0g029cp6l5pgsff3llbdhjj0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmTPBfLoD7OroR2bqxsCYLIBpO9pDUACQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113023971888-37tm41g0g029cp6l5pgsff3llbdhjj0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:113023971888:android:aa6d90dfa76363f3ba33f5",
         "android_client_info": {
           "package_name": "com.example.sellermodule"

@@ -110,7 +110,7 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
                 sellerProdUnits.setText("");
                 sellerProdUnitType.setText("");
 
-                if(name.isEmpty() || price.isEmpty() || price.isEmpty() || units.isEmpty() || unitType.isEmpty())
+                if(name.isEmpty() || price.isEmpty() || units.isEmpty() || unitType.isEmpty())
                 {
                     Toast.makeText(getApplicationContext(), "Enter all item details to add!", Toast.LENGTH_SHORT).show();
                 }
@@ -136,7 +136,7 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
                 sellerProdUnitType.setText("");
 
                 products.get(position).setProductName(name);
-                products.get(position).setPrice(Integer.valueOf(price));
+                products.get(position).setPrice(Float.parseFloat(price));
                 products.get(position).setUnits(Float.parseFloat(units));
                 products.get(position).setUnitType(unitType);
 
@@ -160,7 +160,7 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
 
     private void insertData(String name, String price, String units, String unitType) {
 
-        ProductClass productClass = new ProductClass(name, Integer.parseInt(price), unitType, Float.parseFloat(units));
+        ProductClass productClass = new ProductClass(name, Float.parseFloat(price), unitType, Float.parseFloat(units));
         products.add(productClass);
         updateDb();
         storeProductUpdateActivityAdapter.notifyDataSetChanged();
@@ -170,7 +170,9 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
 
         for(int i=0; i<products.size(); i++)
         {
-            db.collection("Stores").document("Stored_Product_Storage").collection(docLocation).document(String.valueOf(i))
+            db.collection("Stores").document("Stored_Product_Storage")
+                    .collection(docLocation).document("ProductRoot")
+                    .collection("Products").document(String.valueOf(i))
                     .set(products.get(i))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -189,7 +191,9 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
     }
 
     private void deleteDbData() {
-        db.collection("Stores").document("Stored_Product_Storage").collection(docLocation).document(String.valueOf(position))
+        db.collection("Stores").document("Stored_Product_Storage")
+                .collection(docLocation).document("ProductRoot")
+                .collection("Products").document(String.valueOf(position))
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -216,7 +220,9 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
 //        ProductClass dummyProduct = new ProductClass("dummyitem", 0, "none", 0);
 //        db.collection("Stores").document("Stored_Product_Storage").collection(String.valueOf(docLocation)).add(dummyProduct);
 
-        db.collection("Stores").document("Stored_Product_Storage").collection(docLocation)
+        db.collection("Stores").document("Stored_Product_Storage")
+                .collection(docLocation).document("ProductRoot")
+                .collection("Products")
 //                .whereGreaterThan("price", 0)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -230,7 +236,7 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
                                 String name = document.get("name").toString();
-                                int price = Integer.parseInt(document.get("price").toString());
+                                float price = Float.parseFloat(document.get("price").toString());
                                 float units = Float.parseFloat(document.get("units").toString());
                                 String unitType = document.get("unitType").toString();
 

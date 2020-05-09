@@ -1,9 +1,10 @@
 package com.example.Covid19App;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,18 +12,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,23 +37,18 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "DB Log:";
-    TextView title;
-    EditText uName, uNo, uStoreName, uStoreAddress, uEmail;
-    Button sellerReg;
+    private static final String TAG = "Volunteer Reg:";
 
-    private static final String SHARED_PREFS = "sharedPrefs";
-
-    private static final String KEY = "val";
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    EditText vName, vNo, vAddress, vMail;
+    Button reg;
 
     GoogleMap map;
-    com.google.android.gms.maps.model.LatLng loc;
 
     LatLng clickLng;
+
+    com.google.android.gms.maps.model.LatLng loc;
 
     double myLat;
     double myLong;
@@ -67,23 +56,27 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     LocationManager locationManager;
     LocationListener locationListener;
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     MarkerOptions markerOptions;
+
+    String userID = "6546354642" ;
+
+    private static final String SHARED_PREFS = "sharedPrefs";
+
+    private static final String VOLUNTEERID = "volunteerId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_volunteer_sign_up);
 
-        title = findViewById(R.id.sellerTitle);
+        vName = findViewById(R.id.volunteerName);
+        vNo = findViewById(R.id.volunteerNo);
+        vAddress = findViewById(R.id.volunteerAddress);
+        vMail = findViewById(R.id.volunteerMail);
 
-        uName = findViewById(R.id.sellerName);
-        uNo = findViewById(R.id.sellerNumber);
-        uStoreName = findViewById(R.id.storeName);
-        uStoreAddress = findViewById(R.id.storeAddress);
-        uEmail = findViewById(R.id.sellerMail);
-
-        sellerReg = findViewById(R.id.sellerRegister);
-
+        reg = findViewById(R.id.volunteerReg);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
@@ -154,7 +147,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.volunteerMap);
         mapFragment.getMapAsync(this);
 
         String docLocation = loadStoreDoc();
@@ -168,19 +161,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 //            startActivity(new Intent(this, StoreProductUpdateActivity.class));
 //        }
 
-        sellerReg.setOnClickListener(new View.OnClickListener() {
+        reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyDetails();
             }
         });
-
     }
 
     private void verifyDetails() {
 
-        if (uName.getText().toString().isEmpty() || uNo.getText().toString().isEmpty() || uStoreName.getText().toString().isEmpty() || uStoreAddress.getText().toString().isEmpty() ||
-                uEmail.getText().toString().isEmpty()) {
+        if (vName.getText().toString().isEmpty() || vNo.getText().toString().isEmpty() || vAddress.getText().toString().isEmpty() ||
+                vMail.getText().toString().isEmpty()) {
             Log.d(TAG, "Name not present");
             Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show();
         } else {
@@ -191,7 +183,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void updateSellerDb() {
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -224,50 +215,45 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             myLong = clickLng.longitude;
         }
 
-        Map<String, String> seller = new HashMap<>();
-        seller.put("Name", uName.getText().toString());
-        seller.put("Number", uNo.getText().toString());
-        seller.put("StoreName", uStoreName.getText().toString());
-        seller.put("Address", uStoreAddress.getText().toString());
-        seller.put("Email", uEmail.getText().toString());
-        seller.put("Latitude", String.valueOf(myLat));
-        seller.put("Longitude", String.valueOf(myLong));
+        Map<String, Object> volunteer = new HashMap<>();
+        volunteer.put("UserID", userID);
+        volunteer.put("Name", vName.getText().toString());
+        volunteer.put("Number", vNo.getText().toString());
+        volunteer.put("Address", vAddress.getText().toString());
+        volunteer.put("Email", vMail.getText().toString());
+        volunteer.put("Latitude", String.valueOf(myLat));
+        volunteer.put("Longitude", String.valueOf(myLong));
+        volunteer.put("Assigned", 0);
 
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        saveStoreDoc(userID);
 
-        String storeId = uStoreName.getText().toString() + uName.getText().toString();
-
-        seller.put("StoreId", storeId);
-
-        saveStoreDoc(storeId);
-
-        db.collection("SellerID")
-                .add(seller)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        db.collection("VolunteerID").document(userID)
+                .set(volunteer)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
 
         Toast.makeText(this, "Seller Registered", Toast.LENGTH_SHORT).show();
 
-        startActivity(new Intent(this,StoreProductUpdateActivity.class));
+        startActivity(new Intent(this,VolunteerTaskActivity.class));
+
     }
 
-    private void saveStoreDoc(String text) {
+    private void saveStoreDoc(String userID) {
 
-        Log.d(TAG, text);
+        Log.d(TAG, userID);
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY, text);
+        editor.putString(VOLUNTEERID, userID);
         editor.apply();
 
     }
@@ -275,7 +261,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private String loadStoreDoc() {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String text = sharedPreferences.getString(KEY, "");
+        String text = sharedPreferences.getString(VOLUNTEERID, "");
         return text;
 
     }
@@ -323,7 +309,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onMarkerDragStart(Marker marker) {
                 // TODO Auto-generated method stub
                 // Here your code
-                Toast.makeText(MainActivity.this, "Starting to drag marker",
+                Toast.makeText(VolunteerSignUp.this, "Starting to drag marker",
                         Toast.LENGTH_SHORT).show();
             }
 
@@ -351,35 +337,4 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-    private void locationEnabled () {
-
-//        boolean gps_enabled = false;
-//        boolean network_enabled = false;
-//        try {
-//            gps_enabled = locationManager.isProviderEnabled(LocationManager. GPS_PROVIDER ) ;
-//        } catch (Exception e) {
-//            e.printStackTrace() ;
-//        }
-//        try {
-//            network_enabled = locationManager.isProviderEnabled(LocationManager. NETWORK_PROVIDER ) ;
-//        } catch (Exception e) {
-//            e.printStackTrace() ;
-//        }
-//        if (!gps_enabled && !network_enabled) {
-
-            new AlertDialog.Builder(MainActivity. this )
-                    .setMessage( "GPS Enable" )
-                    .setPositiveButton( "Settings" , new
-                            DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick (DialogInterface paramDialogInterface , int paramInt) {
-                                    startActivity( new Intent(Settings. ACTION_LOCATION_SOURCE_SETTINGS )) ;
-                                }
-                            })
-                    .setNegativeButton( "Cancel" , null )
-                    .show() ;
-//        }
-    }
-
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.Covid19App.AdminScanner">
+
+    <TextView
+        android:id="@+id/adminTransacTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adminScanBtn"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TransacId" />
+
+    <TextView
+        android:id="@+id/adminDateTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adminTransacTxt"
+        android:layout_marginBottom="8dp"
+        android:text="Allotted Date" />
+
+    <TextView
+        android:id="@+id/adminStoreAddressTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adminDateTxt"
+        android:text="Address" />
+
+    <Button
+        android:id="@+id/adminScanBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Scan" />
+
+    <ImageView
+        android:id="@+id/adminScannerImg"
+        android:adjustViewBounds="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/adminScanBtn" />
+
+    <Button
+        android:id="@+id/adminCancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Cancel Transaction" />
+</RelativeLayout>

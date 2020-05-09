@@ -1,28 +1,25 @@
 package com.example.Covid19App;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,29 +34,22 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "DB Log:";
-    TextView title;
-    EditText uName, uNo, uStoreName, uStoreAddress, uEmail;
-    Button sellerReg;
+    String taskSMS;
 
-    private static final String SHARED_PREFS = "sharedPrefs";
+    EditText taskBrief, taskDesc, taskAddress;
+    Button taskAssignBtn;
 
-    private static final String KEY = "val";
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private static final String TAG = "AdminSetTask";
     GoogleMap map;
-    com.google.android.gms.maps.model.LatLng loc;
 
     LatLng clickLng;
+
+    com.google.android.gms.maps.model.LatLng loc;
 
     double myLat;
     double myLong;
@@ -67,23 +57,33 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     LocationManager locationManager;
     LocationListener locationListener;
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     MarkerOptions markerOptions;
+
+    String userID = "6546354642" ;
+
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private static final String TASKVOLUNTEERID = "taskVolID";
+    private static final String VOLUNTEERADDRESS = "india";
+    private static final String VOLUNTEERNUMBER = "volNo";
+
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+
+    String volId, volAddress, volNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admin_set_task);
 
-        title = findViewById(R.id.sellerTitle);
+        taskBrief = findViewById(R.id.adminTaskBrief);
+        taskDesc = findViewById(R.id.adminTaskDesc);
+        taskAddress = findViewById(R.id.adminTaskAddress);
 
-        uName = findViewById(R.id.sellerName);
-        uNo = findViewById(R.id.sellerNumber);
-        uStoreName = findViewById(R.id.storeName);
-        uStoreAddress = findViewById(R.id.storeAddress);
-        uEmail = findViewById(R.id.sellerMail);
+        taskAssignBtn = findViewById(R.id.adminAssignBtn);
 
-        sellerReg = findViewById(R.id.sellerRegister);
-
+        loadVolData();
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
@@ -99,6 +99,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 //        {
 //            locationEnabled();
 //        }
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+        {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS))
+            {
+
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        }
 
 
         locationListener = new LocationListener() {
@@ -120,7 +132,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
 
-//                    Toast.makeText(getApplication(), String.valueOf(myLat) + "," + String.valueOf(myLong), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), String.valueOf(myLat) + "," + String.valueOf(myLong), Toast.LENGTH_SHORT).show();
 
 
                 } catch (Exception e) {
@@ -154,21 +166,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.adminTaskMap);
         mapFragment.getMapAsync(this);
 
-        String docLocation = loadStoreDoc();
-
-//        if(docLocation.isEmpty())
-//        {
-//            Toast.makeText(this, "Create new seller id", Toast.LENGTH_SHORT).show();
-//        }
-//        else
-//        {
-//            startActivity(new Intent(this, StoreProductUpdateActivity.class));
-//        }
-
-        sellerReg.setOnClickListener(new View.OnClickListener() {
+        taskAssignBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyDetails();
@@ -177,21 +178,32 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Thanks for permitting", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please permit to send task sms to volunteer", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
     private void verifyDetails() {
 
-        if (uName.getText().toString().isEmpty() || uNo.getText().toString().isEmpty() || uStoreName.getText().toString().isEmpty() || uStoreAddress.getText().toString().isEmpty() ||
-                uEmail.getText().toString().isEmpty()) {
+        if (taskBrief.getText().toString().isEmpty() || taskDesc.getText().toString().isEmpty() || taskAddress.getText().toString().isEmpty()) {
             Log.d(TAG, "Name not present");
             Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show();
         } else {
             Log.d(TAG, "Name present");
-            updateSellerDb();
+            updateTaskDb();
         }
 
     }
 
-    private void updateSellerDb() {
-
+    private void updateTaskDb() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -224,26 +236,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             myLong = clickLng.longitude;
         }
 
-        Map<String, String> seller = new HashMap<>();
-        seller.put("Name", uName.getText().toString());
-        seller.put("Number", uNo.getText().toString());
-        seller.put("StoreName", uStoreName.getText().toString());
-        seller.put("Address", uStoreAddress.getText().toString());
-        seller.put("Email", uEmail.getText().toString());
-        seller.put("Latitude", String.valueOf(myLat));
-        seller.put("Longitude", String.valueOf(myLong));
+        Map<String, Object> task = new HashMap<>();
+        task.put("AdminID", userID);
+        task.put("Brief", taskBrief.getText().toString());
+        task.put("Description", taskDesc.getText().toString());
+        task.put("Address", taskAddress.getText().toString());
+        task.put("VolunteerID", volId.toString());
+        task.put("Latitude", String.valueOf(myLat));
+        task.put("Longitude", String.valueOf(myLong));
+        task.put("Accepted", 0);
+        task.put("Rejected", 0);
+        task.put("Completed", 0);
 
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        taskSMS = userID + "has assigned a task:" + "\n" + "Brief:" + taskBrief.getText().toString() + "\n" + "Address:" + taskAddress.getText().toString() + "\n" + "Contact the admin through this number for more details!";
 
-        String storeId = uStoreName.getText().toString() + uName.getText().toString();
 
-        seller.put("StoreId", storeId);
-
-        saveStoreDoc(storeId);
-
-        db.collection("SellerID")
-                .add(seller)
+        db.collection("VolunteerID").document(volId).collection("Tasks")
+                .add(task)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -257,31 +266,67 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-        Toast.makeText(this, "Seller Registered", Toast.LENGTH_SHORT).show();
+        db.collection("VolunteerID").document(volId)
+                .update("Assigned", 1)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
 
-        startActivity(new Intent(this,StoreProductUpdateActivity.class));
+        db.collection("DataStorage").document("Admin").collection("AdminCollection").document(userID).collection("Tasks")
+                .add(task)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+        volNo = "9444050540";
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
+        {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(volNo, null, taskSMS, null, null);
+            Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show();
+        }
+
+
+        Toast.makeText(this, "Task Assigned!Wait for volunteer confirmation!", Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(this,VolunteerList.class));
+
     }
 
-    private void saveStoreDoc(String text) {
 
-        Log.d(TAG, text);
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY, text);
-        editor.apply();
 
-    }
 
-    private String loadStoreDoc() {
+    private void loadVolData() {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String text = sharedPreferences.getString(KEY, "");
-        return text;
+        volId = sharedPreferences.getString(TASKVOLUNTEERID, "");
+        volAddress = sharedPreferences.getString(VOLUNTEERADDRESS, "");
+        volNo = sharedPreferences.getString(VOLUNTEERNUMBER, "");
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         map = googleMap;
 
         loc = new com.google.android.gms.maps.model.LatLng(myLat, myLong);
@@ -323,7 +368,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void onMarkerDragStart(Marker marker) {
                 // TODO Auto-generated method stub
                 // Here your code
-                Toast.makeText(MainActivity.this, "Starting to drag marker",
+                Toast.makeText(AdminSetTask.this, "Starting to drag marker",
                         Toast.LENGTH_SHORT).show();
             }
 
@@ -351,35 +396,4 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-    private void locationEnabled () {
-
-//        boolean gps_enabled = false;
-//        boolean network_enabled = false;
-//        try {
-//            gps_enabled = locationManager.isProviderEnabled(LocationManager. GPS_PROVIDER ) ;
-//        } catch (Exception e) {
-//            e.printStackTrace() ;
-//        }
-//        try {
-//            network_enabled = locationManager.isProviderEnabled(LocationManager. NETWORK_PROVIDER ) ;
-//        } catch (Exception e) {
-//            e.printStackTrace() ;
-//        }
-//        if (!gps_enabled && !network_enabled) {
-
-            new AlertDialog.Builder(MainActivity. this )
-                    .setMessage( "GPS Enable" )
-                    .setPositiveButton( "Settings" , new
-                            DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick (DialogInterface paramDialogInterface , int paramInt) {
-                                    startActivity( new Intent(Settings. ACTION_LOCATION_SOURCE_SETTINGS )) ;
-                                }
-                            })
-                    .setNegativeButton( "Cancel" , null )
-                    .show() ;
-//        }
-    }
-
 }

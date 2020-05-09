@@ -3,18 +3,18 @@ package com.example.Covid19App;
 public class ProductClass {
 
     public String name;
-    public int price;
+    public float price;
     public String units;
     public float quantity;
 
-    public ProductClass(String name, int price, String units, float quantity) {
+    public ProductClass(String name, float price, String units, float quantity) {
         this.name = name;
         this.price = price;
         this.units = units;
         this.quantity = quantity;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -30,7 +30,7 @@ public class ProductClass {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/adminViewBtn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.Covid19App.LauncherActivity">
@@ -13,6 +14,37 @@
         android:text="Access Store"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/findBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:text="Find Near Me"
+        app:layout_constraintBottom_toTopOf="@+id/storeActivityBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/adminBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Admin "
+        app:layout_constraintBottom_toTopOf="@+id/findBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/volunteerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Volunteer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/storeActivityBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
