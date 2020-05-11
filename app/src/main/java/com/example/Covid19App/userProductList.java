@@ -61,7 +61,7 @@ public class userProductList extends AppCompatActivity {
     private static final String STORENAME = "StoreName";
     private static final String STOREADDRESS = "StoreAddress";
     private static final String TRANSACID = "TransacID";
-    private static final String USERID = "UserID";
+    private static final String ACTUALUSERID = "actualuserid";
 
     String storeProductLocation, storeName, storeAddress;
 
@@ -72,7 +72,7 @@ public class userProductList extends AppCompatActivity {
     float itemPrice;
     String itemType;
 
-    String userID = "6546354642" ;
+    String userID = "NAN" ;
 
     String currentDate;
     String currentTime;
@@ -458,7 +458,7 @@ public class userProductList extends AppCompatActivity {
 
                         if(count == 2)
                         {
-                            storeUserID();
+//                            storeUserID();
 
                             progressDialogdb.dismiss();
 
@@ -491,7 +491,7 @@ public class userProductList extends AppCompatActivity {
 
                         if(count == 2)
                         {
-                            storeUserID();
+//                            storeUserID();
 
                             progressDialogdb.dismiss();
 
@@ -543,14 +543,14 @@ public class userProductList extends AppCompatActivity {
 
     }
 
-    private void storeUserID() {
-
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(USERID, userID);
-        editor.apply();
-
-    }
+//    private void storeUserID() {
+//
+//        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString(USERID, userID);
+//        editor.apply();
+//
+//    }
 
     private void getStoredData() {
 
@@ -613,6 +613,7 @@ public class userProductList extends AppCompatActivity {
         storeProductLocation = sharedPreferences.getString(KEY, "India");
         storeName = sharedPreferences.getString(STORENAME, "RandomStore");
         storeAddress = sharedPreferences.getString(STOREADDRESS, "India");
+        userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
     }
 
     private void initialiseDbListener() {

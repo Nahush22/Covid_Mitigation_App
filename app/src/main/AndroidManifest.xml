@@ -61,7 +61,11 @@
         <activity android:name=".receiptDisplayActivity" />
         <activity android:name=".userProductList" />
         <activity android:name=".LauncherActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".MainStoreActivity" />
         <activity android:name=".productUpdateTest" />

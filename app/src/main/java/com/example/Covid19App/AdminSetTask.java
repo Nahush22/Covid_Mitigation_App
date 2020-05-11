@@ -61,12 +61,13 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
 
     MarkerOptions markerOptions;
 
-    String userID = "6546354642" ;
+    String userID = "NAN" ;
 
     private static final String SHARED_PREFS = "sharedPrefs";
     private static final String TASKVOLUNTEERID = "taskVolID";
     private static final String VOLUNTEERADDRESS = "india";
     private static final String VOLUNTEERNUMBER = "volNo";
+    private static final String ACTUALUSERID = "actualuserid";
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
@@ -321,6 +322,7 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
         volId = sharedPreferences.getString(TASKVOLUNTEERID, "");
         volAddress = sharedPreferences.getString(VOLUNTEERADDRESS, "");
         volNo = sharedPreferences.getString(VOLUNTEERNUMBER, "");
+        userID = sharedPreferences.getString(ACTUALUSERID, "");;
 
     }
 

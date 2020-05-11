@@ -60,11 +60,11 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
 
     MarkerOptions markerOptions;
 
-    String userID = "6546354642" ;
-
     private static final String SHARED_PREFS = "sharedPrefs";
-
     private static final String VOLUNTEERID = "volunteerId";
+    private static final String ACTUALUSERID = "actualuserid";
+
+    String userID = "NAN" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,9 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
         vMail = findViewById(R.id.volunteerMail);
 
         reg = findViewById(R.id.volunteerReg);
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);

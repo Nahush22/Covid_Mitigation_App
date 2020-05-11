@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,9 @@ public class AdminRegister extends AppCompatActivity {
     TextView chooseImg;
     ImageView img;
 
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private static final String ACTUALUSERID = "actualuserid";
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     StorageReference storageReference;
@@ -44,7 +48,7 @@ public class AdminRegister extends AppCompatActivity {
 
     public Uri imguri;
 
-    String userID = "6546354642" ;
+    String userID = "NAN" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,7 @@ public class AdminRegister extends AppCompatActivity {
         name = findViewById(R.id.adminNameTxt);
         no = findViewById(R.id.adminNumberTxt);
         address = findViewById(R.id.adminAddressTxt);
-        mail = findViewById(R.id.adminProfTxt);
+        mail = findViewById(R.id.adminMailTxt);
         prof = findViewById(R.id.adminProfTxt);
         id = findViewById(R.id.adminIdTxt);
         place = findViewById(R.id.adminCityTxt);
@@ -65,6 +69,9 @@ public class AdminRegister extends AppCompatActivity {
         regBtn = findViewById(R.id.adminRegBtn);
         chooseImg = findViewById(R.id.adminImgChooseBtn);
         img = findViewById(R.id.adminImgView);
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
 
         chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override

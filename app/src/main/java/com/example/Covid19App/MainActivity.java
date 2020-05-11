@@ -51,8 +51,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     Button sellerReg;
 
     private static final String SHARED_PREFS = "sharedPrefs";
-
     private static final String KEY = "val";
+    private static final String ACTUALUSERID = "actualuserid";
+
+    String userID;
+
+    String docLocation;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -157,7 +161,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        String docLocation = loadStoreDoc();
+        loadStoreDoc();
 
 //        if(docLocation.isEmpty())
 //        {
@@ -232,6 +236,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         seller.put("Email", uEmail.getText().toString());
         seller.put("Latitude", String.valueOf(myLat));
         seller.put("Longitude", String.valueOf(myLong));
+        seller.put("UserID", userID);
 
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
@@ -272,11 +277,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private String loadStoreDoc() {
+    private void loadStoreDoc() {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String text = sharedPreferences.getString(KEY, "");
-        return text;
+        docLocation = sharedPreferences.getString(KEY, "");
+        userID = sharedPreferences.getString(ACTUALUSERID, "");
 
     }
 

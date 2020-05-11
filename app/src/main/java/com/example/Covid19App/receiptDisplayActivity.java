@@ -37,7 +37,9 @@ public class receiptDisplayActivity extends AppCompatActivity {
     private static final String SHARED_PREFS = "sharedPrefs";
     private static final String STOREID = "storeid";
     private static final String TRANSACID = "TransacID";
-    String userID = "6546354642" ;
+    private static final String ACTUALUSERID = "actualuserid";
+
+    String userID = "NAN" ;
 
     String transacId;
     String storeId;
@@ -71,6 +73,7 @@ public class receiptDisplayActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         transacId = sharedPreferences.getString(TRANSACID, "India");
+        userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
 
         retrieveReceipt();
 
