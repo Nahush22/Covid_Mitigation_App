@@ -1,16 +1,23 @@
 package com.example.Covid19App;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,8 +33,11 @@ import java.util.ArrayList;
 
 public class StoreProductUpdateActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+
     EditText sellerProdName, sellerProdUnits, sellerProdPrice, sellerProdUnitType;
     TextView sellerAddBtn, sellerUpdateBtn;
+    Spinner typeSpinner;
 
     RecyclerView sellerProdView;
 
@@ -51,10 +61,32 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_product_update);
 
+        toolbar = findViewById(R.id.toolBar);
+
+        setSupportActionBar(toolbar);
+
         sellerProdName = findViewById(R.id.sellerProdName);
         sellerProdUnits = findViewById(R.id.sellerUnitsAvailable);
         sellerProdPrice = findViewById(R.id.sellerUnitPrice);
         sellerProdUnitType = findViewById(R.id.sellerUnitType);
+
+        typeSpinner = findViewById(R.id.sellerUnitTypeSpinner);
+        typeSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, UnitTypeData.unitNames));
+
+        sellerProdUnitType.setText(UnitTypeData.unitNames[typeSpinner.getSelectedItemPosition()]) ;
+
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemType = typeSpinner.getSelectedItem().toString();
+                sellerProdUnitType.setText(itemType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         sellerAddBtn = findViewById(R.id.sellerAddBtn);
         sellerUpdateBtn = findViewById(R.id.sellerUpdateBtn);
@@ -103,6 +135,7 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
                 name = sellerProdName.getText().toString();
                 price = sellerProdPrice.getText().toString();
                 units = sellerProdUnits.getText().toString();
+
                 unitType = sellerProdUnitType.getText().toString();
 
                 sellerProdName.setText("");
@@ -257,4 +290,32 @@ public class StoreProductUpdateActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.seller_options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())
+        {
+//            case R.id.orderMenu:
+//                break;
+
+            case R.id.scannerMenu:
+                openScannerMenu();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openScannerMenu() {
+
+        Intent intent = new Intent(this, StoreScanner.class);
+        startActivity(intent);
+
+    }
 }

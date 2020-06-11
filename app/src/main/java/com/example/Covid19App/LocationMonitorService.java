@@ -17,13 +17,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,9 +54,12 @@ public class LocationMonitorService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
 
     private static final String SHARED_PREFS = "sharedPrefs";
-    private static final String USERID = "UserID";
+    private static final String ACTUALUSERID = "actualuserid";
+    private static final String PHONENO = "phoneno";
 
-    private String userID;
+    private String userID, phoneNumber;
+
+    String storeId, transacId;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -61,12 +70,35 @@ public class LocationMonitorService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+//        https://stackoverflow.com/questions/5265913/how-to-use-putextra-and-getextra-for-string-data
+
+
+
         getUserID();
+
+        Bundle extras = intent.getExtras();
+        if(extras != null)
+        {
+
+            if(extras.getString("type").equals("store"))
+            {
+                storeId = extras.getString("storeId");
+                transacId = extras.getString("transacId");
+
+
+                    initialiseDbListener();
+
+
+            }
+
+        }
 
         createNotificationChannel();
         Intent notificationIntent = new Intent(this, receiptDisplayActivity.class);
@@ -95,10 +127,46 @@ public class LocationMonitorService extends Service {
 
     }
 
+    private void initialiseDbListener() {
+
+        final DocumentReference docRef = db.collection("DataStorage").document("Users")
+                .collection(userID).document(transacId);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                String source = snapshot != null && snapshot.getMetadata().hasPendingWrites()
+                        ? "Local" : "Server";
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, source + " data: " + snapshot.getData());
+
+                    if(snapshot.get("Cancelled").toString().equals("1"))
+                    {
+                        stopSelf(); //https://stackoverflow.com/questions/55930516/how-to-force-stop-android-service-programmatically
+                        Toast.makeText(LocationMonitorService.this, "Order has cancelled", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Log.d(TAG, source + " data: null");
+                }
+            }
+        });
+
+    }
+
     private void getUserID() {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        userID = sharedPreferences.getString(USERID, "India");
+        userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
+        phoneNumber = sharedPreferences.getString(PHONENO, "NAN");
+
+
 
     }
 
@@ -165,7 +233,7 @@ public class LocationMonitorService extends Service {
 
         Map<String, Object> userdata = new HashMap<>();
         userdata.put("UserID", userID);
-        userdata.put("UserNo.", 954231879);
+        userdata.put("UserNo.", phoneNumber);
         userdata.put("Latitude", lat);
         userdata.put("Longitude", lng);
         userdata.put("User", 1);

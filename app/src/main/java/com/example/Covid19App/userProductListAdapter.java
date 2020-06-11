@@ -21,9 +21,6 @@ public class userProductListAdapter extends RecyclerView.Adapter<userProductList
     ArrayList<ProductClass> dbProducts;
     UserProductOnclick userProductOnclick;
 
-
-
-
     int msgCount = 0;
 
     public interface UserProductOnclick{

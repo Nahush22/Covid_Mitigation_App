@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/actor</item>
+        <item>@font/akronim</item>
+        <item>@font/alegreya_sans_sc</item>
+        <item>@font/aref_ruqaa</item>
+        <item>@font/caveat_bold</item>
+        <item>@font/doppio_one</item>
+        <item>@font/inconsolata_bold</item>
+    </array>
+</resources>

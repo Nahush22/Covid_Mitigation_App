@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,9 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,6 +37,7 @@ import java.util.Map;
 
 public class AdminRegister extends AppCompatActivity {
 
+    private static final String TAG = "AdminRegister:";
     EditText name, no, address, mail, prof, id, place;
     Button uploadImgBtn, regBtn;
     TextView chooseImg;
@@ -73,6 +78,8 @@ public class AdminRegister extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
 
+        checkAdminPrevReg();
+
         chooseImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +105,44 @@ public class AdminRegister extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadAdminDb();
+            }
+        });
+    }
+
+    private void checkAdminPrevReg() {
+
+        final ProgressDialog progressDialogdb = new ProgressDialog(this);
+        progressDialogdb.setMessage("Checking registration details...");
+        progressDialogdb.show();
+
+        db.collection("DataStorage").document("Admin").collection("AdminCollection").document(userID)
+        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+
+                        if(document.getId().toString().equals(userID))
+                        {
+                            progressDialogdb.dismiss();
+                            finish();
+                            startActivity(new Intent(AdminRegister.this, AdminFunctionsActivity.class));
+                        }
+
+                    } else {
+                        Log.d(TAG, "No such document");
+
+                        progressDialogdb.dismiss();
+                        Toast.makeText(AdminRegister.this, "Please register to access admin module", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    progressDialogdb.dismiss();
+
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
             }
         });
     }

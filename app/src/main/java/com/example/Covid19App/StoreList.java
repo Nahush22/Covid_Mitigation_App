@@ -61,6 +61,7 @@ public class StoreList extends AppCompatActivity {
             public void onEvent(int pos) {
                 position = pos;
                 getProductLocation();
+                finish();
                 startActivity(new Intent(getApplicationContext(), userProductList.class));
             }
         });
@@ -169,6 +170,7 @@ public class StoreList extends AppCompatActivity {
                                 public void onEvent(int pos) {
                                     position = pos;
                                     getProductLocation();
+                                    finish();
                                     startActivity(new Intent(getApplicationContext(), userProductList.class));
                                 }
                             });
@@ -189,6 +191,7 @@ public class StoreList extends AppCompatActivity {
             public void onEvent(int pos) {
                 position = pos;
                 getProductLocation();
+                finish();
                 startActivity(new Intent(getApplicationContext(), userProductList.class));
             }
         });
@@ -198,4 +201,5 @@ public class StoreList extends AppCompatActivity {
 
 //        storeListAdapter.notifyDataSetChanged();
     }
+
 }

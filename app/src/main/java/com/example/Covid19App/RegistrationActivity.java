@@ -21,15 +21,15 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        spinner = findViewById(R.id.spinnerCountries);
-        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
+//        spinner = findViewById(R.id.spinnerCountries);
+//        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
 
         editText = findViewById(R.id.editTextPhone);
 
         findViewById(R.id.buttonContinue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
+//                String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
 
                 String number = editText.getText().toString().trim();
 
@@ -39,7 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     return;
                 }
 
-                String phonenumber = "+" + code + number;
+                String phonenumber = "+" + "91" + number;
 
                 Intent intent = new Intent(RegistrationActivity.this, OtpActivity.class);
                 intent.putExtra("phonenumber", phonenumber);

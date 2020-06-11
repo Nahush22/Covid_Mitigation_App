@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,9 @@ public class OtpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText editText;
 
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private static final String PHONENO = "phoneno";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,12 @@ public class OtpActivity extends AppCompatActivity {
         editText = findViewById(R.id.editTextCode);
 
         String phonenumber = getIntent().getStringExtra("phonenumber");
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PHONENO, phonenumber);
+        editor.apply();
+
         sendVerificationCode(phonenumber);
 
         findViewById(R.id.buttonSignIn).setOnClickListener(new View.OnClickListener() {

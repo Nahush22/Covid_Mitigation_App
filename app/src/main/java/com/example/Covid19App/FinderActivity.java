@@ -125,7 +125,7 @@ public class FinderActivity extends FragmentActivity implements
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.finderMap);
         mapFragment.getMapAsync(this);
 
     }
@@ -210,12 +210,13 @@ public class FinderActivity extends FragmentActivity implements
 
     private String getUrl(double latitude, double longitude, String nearbyPlace)
     {
+        String key = getString(R.string.map_key);
         StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         googleURL.append("location=" + latitude + ", " + longitude);
         googleURL.append("&radius=" + proximityRadius);
         googleURL.append("&type=" + nearbyPlace);
         googleURL.append("&sensor=true");
-        googleURL.append("&key=" + "AIzaSyB707GrGuAJqY7AtL3seRljV30yV-vhmS8");
+        googleURL.append("&key=" + key);
 
         Log.d("GoogleMapsActivity", "url  = " + googleURL.toString());
 

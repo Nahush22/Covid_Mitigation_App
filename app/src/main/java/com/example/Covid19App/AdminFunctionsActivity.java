@@ -1,36 +1,56 @@
 package com.example.Covid19App;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 public class AdminFunctionsActivity extends AppCompatActivity {
 
-    Button scannerBtn, volunteerListBtn;
+    Toolbar toolbar;
+
+    CardView scanCard, taskCard, reqCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_functions);
 
-        scannerBtn = findViewById(R.id.orderScanBtn);
-        volunteerListBtn = findViewById(R.id.volunteerListBtn);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
 
-        scannerBtn.setOnClickListener(new View.OnClickListener() {
+        scanCard = findViewById(R.id.scanCard);
+        taskCard = findViewById(R.id.taskCard);
+        reqCard = findViewById(R.id.reqCard);
+
+        scanCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AdminFunctionsActivity.this, AdminScanner.class));
             }
         });
 
-        volunteerListBtn.setOnClickListener(new View.OnClickListener() {
+        taskCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AdminFunctionsActivity.this, VolunteerList.class));
             }
         });
+
+        reqCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminFunctionsActivity.this, RequestsActivity.class));
+            }
+        });
+
+
     }
 }
+
+
+
+

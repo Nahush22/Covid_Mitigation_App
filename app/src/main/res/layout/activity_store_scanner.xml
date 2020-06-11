@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DEF0F3"
+    tools:context="com.example.Covid19App.StoreScanner">
+
+    <TextView
+        android:id="@+id/storeNameTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storeReceiptNoTxt"
+        android:layout_marginTop="8dp"
+        android:text="Store Name:" />
+
+    <Button
+        android:id="@+id/storeConfirmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Confirm Transaction" />
+
+    <ImageView
+        android:id="@+id/storeScannerImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/storeScannerTotalTxt"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/storeScannerTotalTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storeScannerItemsTxt"
+        android:layout_marginTop="8dp"
+        android:text="Total:" />
+
+    <TextView
+        android:id="@+id/storeScannerItemsTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storeDateTxt"
+        android:layout_marginTop="8dp"
+        android:text="Items:" />
+
+    <TextView
+        android:id="@+id/storeDateTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storeNameTxt"
+        android:layout_marginTop="8dp"
+        android:text="Allotted Date:" />
+
+    <TextView
+        android:id="@+id/storeReceiptNoTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storeScanBtn"
+        android:layout_marginTop="8dp"
+        android:text="Receipt No:" />
+
+    <Button
+        android:id="@+id/storeScanBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Scan" />
+</RelativeLayout>

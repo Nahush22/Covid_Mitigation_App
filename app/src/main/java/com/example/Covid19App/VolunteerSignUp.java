@@ -71,6 +71,8 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_sign_up);
 
+        loadUserId();
+
         vName = findViewById(R.id.volunteerName);
         vNo = findViewById(R.id.volunteerNo);
         vAddress = findViewById(R.id.volunteerAddress);
@@ -153,16 +155,17 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.volunteerMap);
         mapFragment.getMapAsync(this);
 
-        String docLocation = loadStoreDoc();
+        String volunteerExists = loadStoreDoc();
 
-//        if(docLocation.isEmpty())
-//        {
-//            Toast.makeText(this, "Create new seller id", Toast.LENGTH_SHORT).show();
-//        }
-//        else
-//        {
-//            startActivity(new Intent(this, StoreProductUpdateActivity.class));
-//        }
+        if(volunteerExists.isEmpty())
+        {
+            Toast.makeText(this, "Create new seller id", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            finish();
+            startActivity(new Intent(VolunteerSignUp.this,VolunteerTaskActivity.class));
+        }
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +231,9 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
         volunteer.put("Longitude", String.valueOf(myLong));
         volunteer.put("Assigned", 0);
 
+        Map<String, Object> sample = new HashMap<>();
+        sample.put("NAN", "none");
+
         saveStoreDoc(userID);
 
         db.collection("VolunteerID").document(userID)
@@ -245,9 +251,27 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
                     }
                 });
 
-        Toast.makeText(this, "Seller Registered", Toast.LENGTH_SHORT).show();
+        db.collection("VolunteerID").document(userID).collection("Tasks").document("NAN")
+                .set(sample)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
 
-        startActivity(new Intent(this,VolunteerTaskActivity.class));
+                        Toast.makeText(VolunteerSignUp.this, "Volunteer Registered!", Toast.LENGTH_SHORT).show();
+
+                        finish();
+                        startActivity(new Intent(VolunteerSignUp.this,VolunteerTaskActivity.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
 
     }
 
@@ -266,6 +290,13 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String text = sharedPreferences.getString(VOLUNTEERID, "");
         return text;
+
+    }
+
+    private void loadUserId() {
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        userID = sharedPreferences.getString(ACTUALUSERID, "");
 
     }
 

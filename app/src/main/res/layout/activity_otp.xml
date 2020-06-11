@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="com.example.Covid19App.OtpActivity">
 
     <EditText
@@ -15,7 +16,7 @@
         android:layout_marginBottom="232dp"
         android:ems="10"
         android:hint="   OTP"
-        android:inputType="textMultiLine"
+        android:inputType="number"
         android:textColorHint="@android:color/black"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="57dp" />
@@ -43,6 +44,6 @@
         android:layout_below="@+id/editTextCode"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-214dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

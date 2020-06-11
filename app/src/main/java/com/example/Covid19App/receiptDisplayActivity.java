@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,12 +31,12 @@ import java.util.ArrayList;
 
 public class receiptDisplayActivity extends AppCompatActivity {
 
-    private static final String TAG = "Within receipt display activity";
+    private static final String TAG = "ReceiptDisplayActivity";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String SHARED_PREFS = "sharedPrefs";
-    private static final String STOREID = "storeid";
+    private static final String STOREID = "StoreID";
     private static final String TRANSACID = "TransacID";
     private static final String ACTUALUSERID = "actualuserid";
 
@@ -45,13 +46,15 @@ public class receiptDisplayActivity extends AppCompatActivity {
     String storeId;
     String storeName;
 
+    String lat, lng;
+
     Context context;
 
     ArrayList<String> itemNames = new ArrayList<>();
     ArrayList<Double> itemUnits = new ArrayList<>();
 
     TextView transacText, dateText, storeText, addressText, itemText;
-    Button cancelBtn, qrBtn;
+    Button cancelBtn, qrBtn, storeLocBtn;
 
     float val;
 
@@ -68,12 +71,14 @@ public class receiptDisplayActivity extends AppCompatActivity {
 
         cancelBtn = findViewById(R.id.adminCancelBtn);
         qrBtn = findViewById(R.id.qrCodeBtn);
+        storeLocBtn = findViewById(R.id.storeLocBtn);
 
         context = this;
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         transacId = sharedPreferences.getString(TRANSACID, "India");
         userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
+        storeId = sharedPreferences.getString(STOREID, "NAN");
 
         retrieveReceipt();
 
@@ -89,6 +94,7 @@ public class receiptDisplayActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 removeOrder();
                                 Toast.makeText(getApplicationContext(), "Order Cancelled", Toast.LENGTH_SHORT).show();
+                                finish();
                                 startActivity(new Intent(getApplicationContext(), StoreList.class));
                             }
                         })
@@ -111,6 +117,27 @@ public class receiptDisplayActivity extends AppCompatActivity {
             }
         });
 
+        storeLocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMapsApp();
+            }
+        });
+
+    }
+
+    private void openMapsApp() {
+
+        //https://stackoverflow.com/questions/42677389/android-how-to-pass-lat-long-route-info-to-google-maps-app
+
+//        String url = "google.navigation:q=" + lat + "," + lng;
+        String url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng + "&travelmode=driving";
+
+        Uri gmmIntentUri = Uri.parse(url);//Format:"google.navigation:q="latitude,longitude"
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+
     }
 
     private void openQrActivity() {
@@ -123,6 +150,12 @@ public class receiptDisplayActivity extends AppCompatActivity {
         startActivity(new Intent(this, QRActivity.class));
 
     }
+
+    //DATE IDEA
+    //Getting time from internet- https://stackoverflow.com/questions/13064750/how-to-get-current-time-from-internet-in-android
+    //Subtraction of millis - https://stackoverflow.com/questions/49506521/subtraction-of-system-currenttimemillis
+    //Loop code every x time - https://stackoverflow.com/questions/21726055/android-loop-part-of-the-code-every-5-seconds
+    //Another method to get time from internet - https://stackoverflow.com/questions/42663215/how-to-get-time-from-internet-and-convert-it-into-local-time-android
 
     private void retrieveReceipt() {
 
@@ -186,6 +219,35 @@ public class receiptDisplayActivity extends AppCompatActivity {
             }
         });
 
+//        Toast.makeText(receiptDisplayActivity.this, storeId, Toast.LENGTH_SHORT).show();
+
+        db.collection("SellerID").document(storeId)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+
+                            if(!document.get("Latitude").equals(null) && !document.get("Longitude").equals(null)) {
+
+                                lat = document.get("Latitude").toString();
+                                lng = document.get("Longitude").toString();
+
+//                                Toast.makeText(receiptDisplayActivity.this, lat + " , " + lng, Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+        });
+
     }
 
     private void removeOrder() {
@@ -215,7 +277,7 @@ public class receiptDisplayActivity extends AppCompatActivity {
         DocumentReference sellerReceiptLocation = db.collection("Stores").document("Stored_Product_Storage")
                 .collection(storeId).document("ProductRoot").collection("Receipts").document(transacId);
 
-        for(int i=0; i<itemNames.size(); i++) {
+        for(int i=0; i < itemNames.size(); i++) {
 
             final CollectionReference prodRef = db.collection("Stores").document("Stored_Product_Storage")
                     .collection(storeId).document("ProductRoot")

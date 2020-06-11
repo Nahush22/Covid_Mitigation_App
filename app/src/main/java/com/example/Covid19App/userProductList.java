@@ -362,7 +362,7 @@ public class userProductList extends AppCompatActivity {
                                         }
                                     } else {
                                         Log.d(TAG, "get failed with ", task.getException());
-                                        Toast.makeText(getApplicationContext(), "Doesnt exist", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(), "Doesnt exist", Toast.LENGTH_SHORT).show();
 
                                         if(exists == 0) {
 
@@ -415,7 +415,7 @@ public class userProductList extends AppCompatActivity {
 
     private void setUserReceipt(String transactionDate, String transactionTime, String date, int currentHour) {
 
-        String transactionId = transactionDate + transactionTime + userID + storeName;
+        final String transactionId = transactionDate + transactionTime + userID + storeName;
 
         ArrayList<String> itemNames = new ArrayList<>();
         ArrayList<Float> itemUnits = new ArrayList<>();
@@ -441,13 +441,17 @@ public class userProductList extends AppCompatActivity {
         receiptDetails.put("Completed", 0);
         receiptDetails.put("Cancelled", 0);
         receiptDetails.put("CancelAck", 0);
+        receiptDetails.put("Total", total);
 
         count = 0;
 
         Log.d(TAG, "Setting transactionid & receipt map");
+        Log.d(TAG, receiptDetails.toString());
 
         DocumentReference userReceiptLocation = db.collection("DataStorage").document("Users")
                 .collection(userID).document(transactionId);
+
+        Log.d(TAG, userReceiptLocation.toString());
 
         userReceiptLocation.set(receiptDetails)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -462,7 +466,7 @@ public class userProductList extends AppCompatActivity {
 
                             progressDialogdb.dismiss();
 
-                            showServiceAlert();
+                            showServiceAlert(transactionId);
 
                         }
 
@@ -495,7 +499,7 @@ public class userProductList extends AppCompatActivity {
 
                             progressDialogdb.dismiss();
 
-                            showServiceAlert();
+                            showServiceAlert(transactionId);
 
                         }
                     }
@@ -519,7 +523,7 @@ public class userProductList extends AppCompatActivity {
 
     }
 
-    private synchronized void showServiceAlert() {
+    private synchronized void showServiceAlert(final String transacId) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Items ordered!User location will now be tracked to ensure social distancing.This can be disable by cancelling the order.This is to prevent people from visiting shops outside of the allotted time & to prevent misuse of the permit! ")
@@ -528,11 +532,15 @@ public class userProductList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         Intent serviceIntent = new Intent(userProductList.this, LocationMonitorService.class);
-                        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
+                        serviceIntent.putExtra("type", "store");
+                        serviceIntent.putExtra("storeId", storeProductLocation);
+                        serviceIntent.putExtra("transacId", transacId);
 
                         ContextCompat.startForegroundService(userProductList.this, serviceIntent);
 
                         Toast.makeText(getApplicationContext(), "Items Ordered successfully", Toast.LENGTH_LONG).show();
+
+                        finish();
                         startActivity(new Intent(getApplicationContext(), receiptDisplayActivity.class));
 
                     }
@@ -610,7 +618,7 @@ public class userProductList extends AppCompatActivity {
     public void loadStoreID()
     {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        storeProductLocation = sharedPreferences.getString(KEY, "India");
+        storeProductLocation = sharedPreferences.getString(KEY, "NAN");
         storeName = sharedPreferences.getString(STORENAME, "RandomStore");
         storeAddress = sharedPreferences.getString(STOREADDRESS, "India");
         userID = sharedPreferences.getString(ACTUALUSERID, "NAN");

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#DEF0F3"
     tools:context="com.example.Covid19App.AdminScanner">
 
     <TextView
@@ -11,24 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/adminScanBtn"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:text="TransacId" />
+        android:lineSpacingExtra="8sp" />
 
     <TextView
         android:id="@+id/adminDateTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/adminTransacTxt"
-        android:layout_marginBottom="8dp"
-        android:text="Allotted Date" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/adminStoreAddressTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/adminDateTxt"
-        android:text="Address" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
     <Button
         android:id="@+id/adminScanBtn"
@@ -39,15 +44,16 @@
 
     <ImageView
         android:id="@+id/adminScannerImg"
-        android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/adminScanBtn" />
+        android:layout_below="@id/adminScanBtn"
+        android:adjustViewBounds="true" />
 
     <Button
         android:id="@+id/adminCancelBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Cancel Transaction" />
+        android:enabled="false"
+        android:text="Cancel Pass/Transaction" />
 </RelativeLayout>

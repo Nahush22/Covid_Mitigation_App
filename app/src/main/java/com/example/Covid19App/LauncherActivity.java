@@ -8,12 +8,13 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    Button storeActivityBtn, findBtn, adminActivityBtn, volunteerActivityBtn;
+    CardView storeCard, finderCard, adminCard, volunteerCard, passCard, labCard, virusCard, faqCard;
 
     String userID;
     FirebaseAuth mAuth;
@@ -26,40 +27,72 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        storeActivityBtn = findViewById(R.id.storeActivityBtn);
-        findBtn = findViewById(R.id.findBtn);
-        adminActivityBtn = findViewById(R.id.adminBtn);
-        volunteerActivityBtn = findViewById(R.id.volunteerBtn);
+        storeCard = findViewById(R.id.storeCard);
+        finderCard = findViewById(R.id.finderCard);
+        adminCard = findViewById(R.id.adminCard);
+        volunteerCard = findViewById(R.id.volunteerCard);
+        passCard = findViewById(R.id.passCard);
+        labCard = findViewById(R.id.labCard);
+        virusCard = findViewById(R.id.virusCard);
+        faqCard = findViewById(R.id.faqCard);
 
         userID = mAuth.getInstance().getCurrentUser().getUid();
 
         storeUserId();
 
-        adminActivityBtn.setOnClickListener(new View.OnClickListener() {
+        adminCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), AdminRegister.class));
             }
         });
 
-        findBtn.setOnClickListener(new View.OnClickListener() {
+        finderCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), FinderActivity.class));
             }
         });
 
-        storeActivityBtn.setOnClickListener(new View.OnClickListener() {
+        storeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainStoreActivity.class));
             }
         });
 
-        volunteerActivityBtn.setOnClickListener(new View.OnClickListener() {
+        volunteerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), VolunteerSignUp.class));
+            }
+        });
+
+        passCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PassActivity.class));
+            }
+        });
+
+        labCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), TestLabsActivity.class));
+            }
+        });
+
+        virusCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SymptomsActivity.class));
+            }
+        });
+
+        faqCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), FaqActivity.class));
             }
         });
     }

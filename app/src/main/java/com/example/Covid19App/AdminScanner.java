@@ -38,6 +38,10 @@ public class AdminScanner extends AppCompatActivity {
     ImageView scanImg;
 
     String transacId, userId, storeId, date, address;
+    String travelName, travelPassUserId, travelNo, travelOrig, travelDest, travelDate, travelId, travelReason;
+    String esrName, esrId, esrNo, esrOrig, esrDest, esrDate, esrCompany, esrProf, esrEmployeeId;
+
+    String type;
 
     private static final int CAMERA_PERMISSION_CODE=101;
 
@@ -80,29 +84,126 @@ public class AdminScanner extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdminScanner.this);
-                builder.setMessage("Do you want to cancel order?")
-                        .setTitle("Cancel Transaction:")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                if(type.equals("travel"))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AdminScanner.this);
+                    builder.setMessage("Do you want to cancel the pass?")
+                            .setTitle("Cancel Travel Pass:")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                                cancelReceipt();
-                                Toast.makeText(getApplicationContext(), "Transaction Cancelled", Toast.LENGTH_SHORT).show();
+                                    cancelTravelPass();
+                                    Toast.makeText(getApplicationContext(), "Travel Pass Cancelled", Toast.LENGTH_SHORT).show();
 
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //Do something when cancelled
-                            }
-                        });
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //Do something when cancelled
+                                }
+                            });
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+                else if(type.equals("service"))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AdminScanner.this);
+                    builder.setMessage("Do you want to cancel the pass?")
+                            .setTitle("Cancel Essential Service Pass:")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
+                                    cancelServicePass();
+                                    Toast.makeText(getApplicationContext(), "Essential Service Pass Cancelled", Toast.LENGTH_SHORT).show();
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //Do something when cancelled
+                                }
+                            });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+                else if(type.equals("store"))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AdminScanner.this);
+                    builder.setMessage("Do you want to cancel order?")
+                            .setTitle("Cancel Transaction:")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    cancelReceipt();
+                                    Toast.makeText(getApplicationContext(), "Transaction Cancelled", Toast.LENGTH_SHORT).show();
+
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //Do something when cancelled
+                                }
+                            });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
 
             }
         });
+    }
+
+    private void cancelServicePass() {
+
+
+        DocumentReference userReceiptLocation = db.collection("ServicePass").document(esrId);
+
+        userReceiptLocation
+                .update("Rejected", 1)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+
+                        transacTxt.setText("");
+
+                        cancelBtn.setEnabled(false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+
+    }
+
+    private void cancelTravelPass() {
+
+        DocumentReference userReceiptLocation = db.collection("TravelPass").document(travelPassUserId);
+
+        userReceiptLocation
+                .update("Cancelled", 1)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+
+                        transacTxt.setText("");
+
+                        cancelBtn.setEnabled(false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+
     }
 
     private void cancelReceipt() {
@@ -203,6 +304,12 @@ public class AdminScanner extends AppCompatActivity {
                     }
                 });
 
+        transacTxt.setText("");
+        dateTxt.setText("");
+        addressTxt.setText("");
+
+        cancelBtn.setEnabled(false);
+
     }
 
     private void openScanner() {
@@ -213,96 +320,154 @@ public class AdminScanner extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result=IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-        if(result!=null){
-            if(result.getContents()==null){
-                Toast.makeText(this, "Blank", Toast.LENGTH_SHORT).show();
+
+        if(resultCode != RESULT_CANCELED)
+        {
+            if(result != null){
+                if(result.getContents() == null){
+                    Toast.makeText(this, "Blank", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    parseResult(result.getContents());
+                }
             }
             else{
-                parseResult(result.getContents());
+                Toast.makeText(this, "Blank", Toast.LENGTH_SHORT).show();
             }
         }
-        else{
-            Toast.makeText(this, "Blank", Toast.LENGTH_SHORT).show();
-        }
+
+
     }
 
     private void parseResult(String contents) {
 
         final String[] data = contents.split(",");
 
-        transacId = data[0];
-        userId = data[1];
-        storeId = data[2];
+//        if(data != null) {
+//            Toast.makeText(this, String.valueOf(data.length), Toast.LENGTH_SHORT).show();
+//        }
 
-        transacTxt.setText(data[0]);
+        if(data.length == 8)
+        {
+            type = "travel";
 
-        DocumentReference userReceiptLocation = db.collection("DataStorage").document("Users")
-                .collection(userId).document(transacId);
+            travelName = data[0];
+            travelPassUserId = data[1];
+            travelNo = data[2];
+            travelOrig = data[3];
+            travelDest = data[4];
+            travelDate = data[5];
+            travelId = data[6];
+            travelReason = data[7];
 
-        DocumentReference sellerReceiptLocation = db.collection("Stores").document("Stored_Product_Storage")
-                .collection(storeId).document("ProductRoot").collection("Receipts").document(transacId);
+            String txt = "Name: " + travelName + "\n" + "Number: " + travelNo + "\n" + "Origin: " + travelOrig + "\n" + "Destination: " + travelDest + "\n" +
+                    "Date: " + travelDate + "\n" + "Id: " + travelId + "\n" + "Reason: " + travelReason;
 
-        userReceiptLocation.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("AdminScanner", "DocumentSnapshot data: " + document.getData());
+            transacTxt.setText(txt);
 
-                        String hr = document.get("DeliveryTime").toString();
+            cancelBtn.setEnabled(true);
+        }
+        else if(data.length == 9)
+        {
+            type = "service";
 
-                        switch (hr)
-                        {
-                            case "9": hr = "9" + "-" + "10 Am";
-                                break;
-                            case "10": hr = "10" + "-" + "11 Am";
-                                break;
-                            case "11": hr = "11" + "-" + "12 Am";
-                                break;
-                            case "12": hr = "12" + "-" + "1 Pm";
-                                break;
-                            case "13": hr = "1" + "-" + "2 Pm";
-                                break;
-                            case "14": hr = "2" + "-" + "3 Pm";
-                                break;
-                            case "15": hr = "3" + "-" + "4 Pm";
-                                break;
-                            case "16": hr = "4" + "-" + "5 Pm";
-                                break;
+            esrName = data[0];
+            esrId = data[1];
+            esrNo = data[2];
+            esrOrig = data[3];
+            esrDest = data[4];
+            esrDate = data[5];
+            esrCompany = data[6];
+            esrProf = data[7];
+            esrEmployeeId = data[8];
 
+            String txt = "Name: " + esrName + "\n" + "Number: " + esrNo + "\n" + "Origin: " + esrOrig + "\n" + "Destination: " + esrDest + "\n" +
+                    "Date: " + esrDate + "\n" + "Organisation: " + esrCompany + "\n" + "Profession: " + esrProf + "\n" + "Employee Id: " + esrEmployeeId;
+
+            transacTxt.setText(txt);
+
+            cancelBtn.setEnabled(true);
+        }
+        else
+        {
+            type = "store";
+
+            transacId = data[0];
+            userId = data[1];
+            storeId = data[2];
+
+            transacTxt.setText("Transaction Id: " + data[0]);
+
+            DocumentReference userReceiptLocation = db.collection("DataStorage").document("Users")
+                    .collection(userId).document(transacId);
+
+
+            userReceiptLocation.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d("AdminScanner", "DocumentSnapshot data: " + document.getData());
+
+                            String hr = document.get("DeliveryTime").toString();
+
+                            switch (hr)
+                            {
+                                case "9": hr = "9" + "-" + "10 Am";
+                                    break;
+                                case "10": hr = "10" + "-" + "11 Am";
+                                    break;
+                                case "11": hr = "11" + "-" + "12 Am";
+                                    break;
+                                case "12": hr = "12" + "-" + "1 Pm";
+                                    break;
+                                case "13": hr = "1" + "-" + "2 Pm";
+                                    break;
+                                case "14": hr = "2" + "-" + "3 Pm";
+                                    break;
+                                case "15": hr = "3" + "-" + "4 Pm";
+                                    break;
+                                case "16": hr = "4" + "-" + "5 Pm";
+                                    break;
+
+                            }
+
+                            date = document.get("DeliveryDate").toString() + ", " + hr;
+                            address = document.get("StoreAddress").toString();
+
+                            Log.d(TAG, date);
+                            Log.d(TAG, address);
+
+                            if(data.equals(null) || address.equals(null))
+                            {
+                                Toast.makeText(AdminScanner.this, "Unable to get transaction data", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                dateTxt.setText("Date: " + date);
+                                addressTxt.setText("Address: " + address);
+
+                                cancelBtn.setEnabled(true);
+                            }
+
+
+
+                        } else {
+                            Log.d("AdminScanner", "No such document");
+
+                            Toast.makeText(AdminScanner.this, "Document doesnt exist", Toast.LENGTH_SHORT).show();
                         }
-
-                        date = document.get("DeliveryDate").toString() + ", " + hr;
-                        address = document.get("StoreAddress").toString();
-
-                        Log.d(TAG, date);
-                        Log.d(TAG, address);
-
-                        if(data.equals(null) || address.equals(null))
-                        {
-                            Toast.makeText(AdminScanner.this, "Unable to get transaction data", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            dateTxt.setText(date);
-                            addressTxt.setText(address);
-                        }
-
-
-
                     } else {
-                        Log.d("AdminScanner", "No such document");
+                        Log.d("AdminScanner", "get failed with ", task.getException());
 
-                        Toast.makeText(AdminScanner.this, "Document doesnt exist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminScanner.this, "Unable to access receipt", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Log.d("AdminScanner", "get failed with ", task.getException());
-
-                    Toast.makeText(AdminScanner.this, "Unable to access receipt", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+
+        }
+
 
 
     }
@@ -318,12 +483,12 @@ public class AdminScanner extends AppCompatActivity {
         }
     }
 
-    private void requestPermission(String permision,int code){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(AdminScanner.this,permision)){
+    private void requestPermission(String permission, int code){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(AdminScanner.this,permission)){
 
         }
         else{
-            ActivityCompat.requestPermissions(AdminScanner.this,new String[]{permision},code);
+            ActivityCompat.requestPermissions(AdminScanner.this,new String[]{permission},code);
         }
     }
 

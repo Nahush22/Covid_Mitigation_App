@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +25,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class VolunteerList extends AppCompatActivity {
+
+    TextView reqTxt;
 
     private static final String TAG = "VolunteerList Db Access:";
 
@@ -49,6 +53,8 @@ public class VolunteerList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_list);
+
+        reqTxt = findViewById(R.id.volListReqTxt);
 
         volunteerView = findViewById(R.id.volunteerListView);
 
@@ -120,6 +126,15 @@ public class VolunteerList extends AppCompatActivity {
                                 }
                             }
 
+                            if(volunteerId.size() == 0)
+                            {
+                                reqTxt.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                reqTxt.setVisibility(View.GONE);
+                            }
+
                             recyclerViewInitialise();
 
                             progressDialog.dismiss();
@@ -135,7 +150,7 @@ public class VolunteerList extends AppCompatActivity {
     private void initialiseDbListener() {
 
         db.collection("VolunteerID")
-//                .whereEqualTo("state", "CA")
+                .whereEqualTo("Assigned", 0)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshot,
@@ -153,6 +168,15 @@ public class VolunteerList extends AppCompatActivity {
                             volunteerId.clear();
                             volunteerAddress.clear();
                             volunteerNumber.clear();
+
+                            if(snapshot.size() == 0)
+                            {
+                                reqTxt.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                reqTxt.setVisibility(View.GONE);
+                            }
 
                             for (QueryDocumentSnapshot document : snapshot) {
                                 if(document.get("Number") != null && document.get("Address") != null && document.get("UserID") != null) {

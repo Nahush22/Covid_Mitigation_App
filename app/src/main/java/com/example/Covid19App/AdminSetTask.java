@@ -68,10 +68,11 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
     private static final String VOLUNTEERADDRESS = "india";
     private static final String VOLUNTEERNUMBER = "volNo";
     private static final String ACTUALUSERID = "actualuserid";
+    private static final String PHONENO = "phoneno";
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
 
-    String volId, volAddress, volNo;
+    String volId, volAddress, volNo, adminNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +134,7 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
 
-                    Toast.makeText(getApplication(), String.valueOf(myLat) + "," + String.valueOf(myLong), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplication(), String.valueOf(myLat) + "," + String.valueOf(myLong), Toast.LENGTH_SHORT).show();
 
 
                 } catch (Exception e) {
@@ -237,19 +238,25 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
             myLong = clickLng.longitude;
         }
 
+        adminNo = "9444050540";
+
         Map<String, Object> task = new HashMap<>();
         task.put("AdminID", userID);
         task.put("Brief", taskBrief.getText().toString());
         task.put("Description", taskDesc.getText().toString());
         task.put("Address", taskAddress.getText().toString());
-        task.put("VolunteerID", volId.toString());
+        task.put("VolunteerID", volId);
         task.put("Latitude", String.valueOf(myLat));
         task.put("Longitude", String.valueOf(myLong));
         task.put("Accepted", 0);
         task.put("Rejected", 0);
         task.put("Completed", 0);
+        task.put("Assigned", 1);
+        task.put("CompletionRequest", 0);
+        task.put("Acknowledgement", 0);
+        task.put("AdminNo", adminNo);
 
-        taskSMS = userID + "has assigned a task:" + "\n" + "Brief:" + taskBrief.getText().toString() + "\n" + "Address:" + taskAddress.getText().toString() + "\n" + "Contact the admin through this number for more details!";
+        taskSMS = userID + "has assigned a task:" + "\n" + "Brief:" + taskBrief.getText().toString() + "\n" + "Address:" + taskAddress.getText().toString() + "\n" + "View the task in the app & select your choice!Contact the admin through this number for more details!";
 
 
         db.collection("VolunteerID").document(volId).collection("Tasks")
@@ -309,11 +316,10 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
 
         Toast.makeText(this, "Task Assigned!Wait for volunteer confirmation!", Toast.LENGTH_SHORT).show();
 
+        finish();
         startActivity(new Intent(this,VolunteerList.class));
 
     }
-
-
 
 
     private void loadVolData() {
@@ -322,7 +328,8 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
         volId = sharedPreferences.getString(TASKVOLUNTEERID, "");
         volAddress = sharedPreferences.getString(VOLUNTEERADDRESS, "");
         volNo = sharedPreferences.getString(VOLUNTEERNUMBER, "");
-        userID = sharedPreferences.getString(ACTUALUSERID, "");;
+        userID = sharedPreferences.getString(ACTUALUSERID, "");
+        adminNo = sharedPreferences.getString(PHONENO, "");
 
     }
 

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Covid19 MitiGATOR</string>
-    <string name="map_key" translatable="false">AIzaSyB707GrGuAJqY7AtL3seRljV30yV-vhmS8</string>
+    <string name="map_key" translatable="false">AIzaSyC99WpgGq-xPRvGCuct0gfyl7__CnGAJlw</string>
 
     <string-array name="unitType_array">
         <item>Kg</item>
@@ -12,4 +12,376 @@
     </string-array>
     <string name="title_activity_finder">Map</string>
     <string name="NotificationString">Service to monitor user location is running</string>
+    <string name="VolunteerNotifString">Service to monitor volunteer location is running</string>
+    <string name="title_activity_route">Map</string>
+
+
+    <string-array name="basic_title">
+        <item>What is a novel coronavirus?</item>
+        <item>Why is the disease being called Coronavirus disease 2019, COVID-19?</item>
+        <item>Why might someone blame or avoid individuals and groups(create stigma) because of COVID-19?</item>
+        <item>How can people help stop stigma related to COVID-19?</item>
+        <item>COVID-19 and Hypertension</item>
+    </string-array>
+
+    <string-array name="basic_text">
+        <item>A novel coronavirus is a new coronavirus that has not been previously identified. The virus causing coronavirus disease 2019 (COVID-19), is not the same as the coronaviruses that commonly circulate among humans and cause mild illness, like the common cold. \n A diagnosis with coronavirus 229E, NL63, OC43, or HKU1 is not the same as a COVID-19 diagnosis. Patients with COVID-19 will be evaluated and cared for differently than patients with common coronavirus diagnosis.</item>
+        <item>On February 11, 2020 the World Health Organization announced an official name for the disease that is causing the 2019 novel coronavirus outbreak, first identified in Wuhan China. The new name of this disease is coronavirus disease 2019, abbreviated as COVID-19. In COVID-19, ‘CO’ stands for ‘corona,’ ‘VI’ for ‘virus,’ and ‘D’ for disease. Formerly, this disease was referred to as “2019 novel coronavirus” or “2019-nCoV”.\n There are many types of human coronaviruses including some that commonly cause mild upper-respiratory tract illnesses. COVID-19 is a new disease, caused be a novel (or new) coronavirus that has not previously been seen in humans. The name of this disease was selected following the World Health Organization (WHO) best practice for naming of new human infectious diseases.</item>
+        <item>People in India may be worried or anxious about friends and relatives who are living in or visiting areas where COVID-19 is spreading. Some people are worried about getting the disease from these people. Fear and anxiety can lead to social stigma, for example, toward people who live in certain parts of the world, people who have traveled internationally, people who were in quarantine, or healthcare professionals.
+
+Stigma is discrimination against an identifiable group of people, a place, or a nation. Stigma is associated with a lack of knowledge about how COVID-19 spreads, a need to blame someone, fears about disease and death, and gossip that spreads rumors and myths.
+
+Stigma hurts everyone by creating more fear or anger toward ordinary people instead of focusing on the disease that is causing the problem.</item>
+        <item>People can fight stigma by providing social support in situations where you notice this is occurring. Stigma affects the emotional or mental health of stigmatized groups and the communities they live in. Stopping stigma is important to making communities and community members resilient.Everyone can help stop stigma related to COVID-19 by knowing the facts and sharing them with others in your community.</item>
+        <item>Are people with high blood pressure (hypertension) at higher risk from COVID-19?
+
+At this time, we do not think that people with high blood pressure and no other underlying health conditions are more likely than others to get severely ill from COVID-19. Although many people who have gotten severely ill from COVID-19 have high blood pressure, they are often older or have other medical conditions like obesity, diabetes, and serious heart conditions that place them at higher risk of severe illness from COVID-19.
+
+If you have high blood pressure, it’s critically important that you keep your blood pressure under control to lower your risk for heart disease and strokes. Take your blood pressure medications as directed, keep a log of your blood pressure every day if you are able to take your blood pressure at home, and work with your healthcare team to make sure your blood pressure is well controlled. Any changes to your medications should be made in consultation with your healthcare team.
+
+Should I continue to take my blood pressure medication?
+
+Yes. Continue to take your blood pressure medications exactly as prescribed and make lifestyle modifications agreed upon in your treatment plan. Continue all your regular medications, including angiotensin-converting enzyme inhibitors (ACE-Is) or angiotensin receptor blockers (ARBs), as prescribed by your healthcare team. This is recommended by current clinical guidelines from the American Heart Association, the Heart Failure Society of America, and the American College of Cardiology</item>
+    </string-array>
+
+    <string-array name="protect_title">
+        <item>Am I at risk for COVID-19 in India?</item>
+        <item>How many cases have been reported in India?</item>
+        <item>How can I help protect myself?</item>
+        <item>Am I at risk for COVID-19 from mail, packages, or products?</item>
+        <item>Should contact lens wearers take special precautions to prevent COVID-19?</item>
+        <item>Is contact lens disinfecting solution effective against COVID-19?</item>
+    </string-array>
+
+    <string-array name="protect_text">
+        <item>The main way the disease spreads is through respiratory droplets
+expelled by someone who is coughing. The risk of catching COVID-19
+from someone with no symptoms at all is very low. However, many
+people with COVID-19 experience only mild symptoms. This is
+particularly true at the early stages of the disease. It is therefore
+possible to catch COVID-19 from someone who has, for example, just
+a mild cough and does not feel ill.</item>
+        <item>Visit https://www.mohfw.gov.in/ to know the official number of cases in India or follow the reports of news channels.</item>
+        <item>Stay aware of the latest information on the COVID-19 outbreak,
+available on the national,state and local public health authority. Many
+countries around the world have seen cases of COVID-19 and several
+have seen outbreaks. Authorities in China and some other countries
+have succeeded in slowing or stopping their outbreaks. However, the
+situation is unpredictable so check regularly for the latest news. </item>
+        <item>There is still a lot that is unknown about COVID-19 and how it spreads. Coronaviruses are thought to be spread most often by respiratory droplets. Although the virus can survive for a short period on some surfaces, it is unlikely to be spread from domestic or international mail, products or packaging. However, it may be possible that people can get COVID-19 by touching a surface or object that has the virus on it and then touching their own mouth, nose, or possibly their eyes, but this is not thought to be the main way the virus spreads.</item>
+        <item>Currently there is no evidence to suggest contact lens wearers are more at risk for acquiring COVID-19 than eyeglass wearers.
+Contact lens wearers should continue to practice safe contact lens wear and care hygiene habits to help prevent against transmission of any contact lens-related infections, such as always washing hands with soap and water before handling lenses.
+People who are healthy can continue to wear and care for their contact lenses as prescribed by their eye care professional.
+</item>
+        <item>Hydrogen peroxide-based systems for cleaning, disinfecting, and storing contact lenses should be effective against the virus that causes COVID-19.
+For other disinfection methods, such as multipurpose solution and ultrasonic cleaners, there is currently not enough scientific evidence to determine efficacy against the virus.
+Always use solution to disinfect your contact lenses and case to kill germs that may be present.
+Handle your lenses over a surface that has been cleaned and disinfected.
+</item>
+    </string-array>
+
+    <string-array name="spread_title">
+        <item>What is novel coronavirus?</item>
+        <item>How does the virus spread?</item>
+        <item>Why are we see a rise in cases?</item>
+        <item>Can someone who has had COVID-19 spread the illness to others?</item>
+        <item>Can someone who has been quarantined for COVID-19 spread the illness to others?</item>
+        <item>Can the virus that causes COVID-19 be spread through food, including restaurant take out, refrigerated or frozen packaged food?</item>
+        <item>Can I get sick with COVID-19 if it is on food?</item>
+        <item>Will warm weather stop the outbreak of COVID-19?</item>
+        <item>What is community spread?</item>
+        <item>What temperature kills the virus that causes COVID-19?</item>
+        <item>Can mosquitoes or ticks spread the virus that causes COVID-19?</item>
+    </string-array>
+
+    <string-array name="spread_text">
+        <item>A novel coronavirus is a new coronavirus that has not been previously identified. The virus causing coronavirus disease 2019 (COVID-19), is not the same as the coronaviruses that commonly circulate among humans and cause mild illness, like the common cold.\n A diagnosis with coronavirus 229E, NL63, OC43, or HKU1 is not the same as a COVID-19 diagnosis. Patients with COVID-19 will be evaluated and cared for differently than patients with common coronavirus diagnosis.</item>
+        <item>The virus that causes COVID-19 is thought to spread mainly from person to person, mainly through respiratory droplets produced when an infected person coughs or sneezes. These droplets can land in the mouths or noses of people who are nearby or possibly be inhaled into the lungs. Spread is more likely when people are in close contact with one another (within about 6 feet).
+
+                COVID-19 seems to be spreading easily and sustainably in the community (“community spread”) in many affected geographic areas. Community spread means people have been infected with the virus in an area, including some who are not sure how or where they became infected.</item>
+        <item>The number of cases of COVID-19 being reported in India is rising due to increased laboratory testing and reporting across the country. The growing number of cases in part reflects the rapid spread of COVID-19 as many Indian states and territories experience community spread. More detailed and accurate data will allow us to better understand and track the size and scope of the outbreak and strengthen prevention and response efforts.</item>
+        <item>The virus that causes COVID-19 is spreading from person-to-person. People are thought to be most contagious when they are symptomatic (the sickest). That is why it is recommended that these patients be isolated either in the hospital or at home (depending on how sick they are) until they are better and no longer pose a risk of infecting others. More recently the virus has also been detected in asymptomatic persons.
+                How long someone is actively sick can vary so the decision on when to release someone from isolation is made using a test-based or non-test-based strategy (i.e. time since illness started and time since recovery) in consultation with state and local public health officials. The decision involves considering the specifics of each situation, including disease severity, illness signs and symptoms, and the results of laboratory testing for that patient.
+                Someone who has been released from isolation is not considered to pose a risk of infection to others.
+                </item>
+        <item>Quarantine means separating a person or group of people who have been exposed to a contagious disease but have not developed illness (symptoms) from others who have not been exposed, in order to prevent the possible spread of that disease. Quarantine is usually established for the incubation period of the communicable disease, which is the span of time during which people have developed illness after exposure. For COVID-19, the period of quarantine is 14 days from the last date of exposure because the incubation period for this virus is 2 to 14 days. Someone who has been released from COVID-19 quarantine is not considered a risk for spreading the virus to others because they have not developed illness during the incubation period.</item>
+        <item>Coronaviruses are generally thought to be spread from person to person through respiratory droplets. Currently, there is no evidence to support transmission of COVID-19 associated with food. Before preparing or eating food it is important to always wash your hands with soap and water for at least 20 seconds for general food safety. Throughout the day use a tissue to cover your coughing or sneezing, and wash your hands after blowing your nose, coughing or sneezing, or going to the bathroom.
+
+            It may be possible that a person can get COVID-19 by touching a surface or object, like a packaging container, that has the virus on it and then touching their own mouth, nose, or possibly their eyes, but this is not thought to be the main way the virus spreads.
+
+            In general, because of poor survivability of these coronaviruses on surfaces, there is likely very low risk of spread from food products or packaging.</item>
+        <item>Based on information about this novel coronavirus thus far, it seems unlikely that COVID-19 can be transmitted through food – additional investigation is needed.</item>
+        <item>It is not yet known whether weather and temperature affect the spread of COVID-19. Some other viruses, like those that cause the common cold and flu, spread more during cold weather months but that does not mean it is impossible to become sick with these viruses during other months.  There is much more to learn about the transmissibility, severity, and other features associated with COVID-19 and investigations are ongoing.</item>
+        <item>Community spread means people have been infected with the virus in an area, including some who are not sure how or where they became infected.</item>
+        <item>Generally coronaviruses survive for shorter periods at higher temperatures and higher humidity than in cooler or dryer environments. However, we don’t have direct data for this virus, nor do we have direct data for a temperature-based cutoff for inactivation at this point. The necessary temperature would also be based on the materials of the surface, the environment, etc. Regardless of temperature please follow official guidelines for cleaning and disinfection.</item>
+        <item>At this time, CDC has no data to suggest that this new coronavirus or other similar coronaviruses are spread by mosquitoes or ticks. The main way that COVID-19 spreads is from person to person. See How Coronavirus Spreads for more information.</item>
+    </string-array>
+
+    <string-array name="children_title">
+        <item>What is the risk of my child becoming sick with COVID-19?</item>
+        <item>How can I protect my child from COVID-19 infection?</item>
+        <item>Are the symptoms of COVID-19 different in children than in adults?</item>
+        <item>Should children wear masks?</item>
+        <item>How do I prepare my children in case of COVID-19 outbreak in our community?</item>
+        <item>What steps should parents take to protect children during a community outbreak?</item>
+    </string-array>
+
+    <string-array name="children_text">
+        <item>Based on available evidence, children do not appear to be at higher risk for COVID-19 than adults. While some children and infants have been sick with COVID-19, adults make up most of the known cases to date.</item>
+        <item>You can encourage your child to help stop the spread of COVID-19 by teaching them to do the same things everyone should do to stay healthy.
+Avoid close contact with people who are sick.
+Stay home when you are sick, except to get medical care.
+Cover your coughs and sneezes with a tissue and throw the tissue in the trash.
+Wash your hands often with soap and water for at least 20 seconds, especially after blowing your nose, coughing, or sneezing; going to the bathroom; and before eating or preparing food.
+If soap and water are not readily available, use an alcohol-based hand sanitizer with at least 60% alcohol. Always wash hands with soap and water if hands are visibly dirty.
+Clean and disinfect frequently touched surfaces and objects (e.g., tables, countertops, light switches, doorknobs, and cabinet handles).
+Launder items, including washable plush toys, as appropriate and in accordance with the manufacturer’s instructions. If possible, launder items using the warmest appropriate water setting for the items and dry items completely. Dirty laundry from an ill person can be washed with other people’s items.
+</item>
+        <item>No. The symptoms of COVID-19 are similar in children and adults. However, children with confirmed COVID-19 have generally presented with mild symptoms. Reported symptoms in children include cold-like symptoms, such as fever, runny nose, and cough. Vomiting and diarrhea have also been reported. It’s not known yet whether some children may be at higher risk for severe illness, for example, children with underlying medical conditions and special healthcare needs. There is much more to be learned about how the disease impacts children.</item>
+        <item>CDC recommends that everyone 2 years and older wear a cloth face covering that covers their nose and mouth when they are out in the community. Cloth face coverings should NOT be put on babies or children younger than 2 because of the danger of suffocation. Children younger than 2 years of age are listed as an exception as well as anyone who has trouble breathing or is unconscious, incapacitated, or otherwise unable to remove the face covering without assistance.
+
+Wearing cloth face coverings is a public health measure people should take to reduce the spread of COVID-19 in addition to (not instead of) social distancing, frequent hand cleaning ,and other everyday preventive actions. A cloth face covering is not intended to protect the wearer but may prevent the spread of virus from the wearer to others. This would be especially important if someone is infected but does not have symptoms. Medical face masks and N95 respirators are still reserved for healthcare personnel and other first responders, as recommended by current CDC guidance.</item>
+        <item>Outbreaks can be stressful for adults and children. Talk with your children about the outbreak, try to stay calm, and reassure them that they are safe. If appropriate, explain to them that most illness from COVID-19 seems to be mild. Children respond differently to stressful situations than adults.</item>
+        <item>This is a new virus and we are still learning about it, but so far, there does not seem to be a lot of illness in children. Most illness, including serious illness, is happening in adults of working age and older adults. However, children do get the virus and become ill. Many schools across the country have announced dismissals for temporary periods. Keep track of school dismissals in your community. Read or watch local media sources that report school dismissals. If schools are dismissed temporarily, use alternative childcare arrangements, if needed.
+
+If your child/children become sick with COVID-19, notify their childcare facility or school. Talk with teachers about classroom assignments and activities they can do from home to keep up with their schoolwork.
+
+Discourage children and teens from gathering in other public places while school is dismissed to help slow the spread of COVID-19 in the community.</item>
+    </string-array>
+
+    <string-array name="childhealth_title">
+        <item>Is my child with an underlying medical condition or special healthcare need at higher risk for severe illness from COVID-19?</item>
+        <item>What can I do if my child has difficulties adjusting to new routines and following recommendations?</item>
+        <item>How can my family cope with the added stress?</item>
+        <item>What if my child or someone else in the home is sick with symptoms of COVID-19?</item>
+    </string-array>
+
+    <string-array name="childhealth_text">
+        <item>Children with complex, chronic medical conditions, including children with physical, developmental, behavioral, or emotional differences, can have special healthcare needs. It’s not known yet whether all of these children are at higher risk for severe illness from COVID-19.
+
+Although most COVID-19 cases in children are not severe, serious illness that needs to be treated at the hospital still happens. Some data on children reported that the majority who needed hospitalization for COVID-19 had at least one underlying medical condition. The most common underlying conditions reported among children with COVID-19 include chronic lung disease (including asthma), heart disease, and conditions that weaken the immune system. This information suggests that children with these underlying medical conditions may be at risk for more severe illness from COVID-19.
+
+More data are needed to learn which underlying or complex medical conditions may put children at increased risk.</item>
+        <item>Helping children understand and follow recommendations, like social distancing and wearing cloth face coverings, can be challenging if your child has intellectual disabilities, sensory issues, or other special healthcare needs.
+Keeping children at home and sheltering in place can lower stress created by social distancing and cloth face covering recommendations. Reach out to others for help in running essential errands.
+Behavioral techniques can be used to address behavioral challenges and to develop new routines. These include social stories, video modeling, picture schedules, and visual cues. Try rewarding your child in small ways with his or her favorite non-food treat or activities to help switch routines and to follow recommendations.
+Many of the organizations you turn to for information and support around your child’s complex, chronic medical condition may have information on their websites to help families address issues related to COVID-19.
+Your child’s therapist(s) and/or teachers may also have resources to help successfully introduce new routines to your child.
+</item>
+        <item>Supporting children with special healthcare needs can put additional demands and stress on families, especially during emergency situations. You have likely found ways to manage the stress and challenges unique to your family’s situation. It is important to continue your family’s coping methods, including reaching out to other family members, friends, support groups, and organizations that have been helpful in the past.</item>
+        <item>If your child with special healthcare needs becomes sick with symptoms of COVID-19, contact your child’s healthcare provider. If your child has new or worsening emergency warning signs, such as trouble breathing, pain or pressure in the chest, confusion or inability to wake them up, or bluish lips or face, call +91-11-23978046 or your state helpline or get checked for COVID-19 at the nearest test centre. If you think your child may have COVID-19, notify the operator so that first responders may be appropriately prepared to protect themselves and others.
+
+Notify your child’s healthcare provider if someone else in your house becomes sick with COVID-19, so they can provide any advice specific for your child.</item>
+    </string-array>
+
+    <string-array name="home_title">
+        <item>How can my family and I prepare for COVID-19?</item>
+        <item>What steps can my family take to reduce our risk of getting COVID-19?</item>
+        <item>What should I do if someone in my house gets sick with COVID-19?</item>
+        <item>How can I prepare in case my child\'s school, child care facility, or university is dismissed?</item>
+        <item>How can I prepare for COVID-19 at work?</item>
+        <item>Should I use soap &amp; water or a hand sanitizer to protect against COVID-19?</item>
+        <item>What cleaning products should I use to protect against COVID-19?</item>
+    </string-array>
+
+    <string-array name="home_text">
+        <item>Create a household plan of action to help protect your health and the health of those you care about in the event of an outbreak of COVID-19 in your community:
+Talk with the people who need to be included in your plan, and discuss what to do if a COVID-19 outbreak occurs in your community.
+Plan ways to care for those who might be at greater risk for serious complications, particularly older adults and those with severe chronic medical conditions like heart, lung or kidney disease.
+Make sure they have access to several weeks of medications and supplies in case you need to stay home for prolonged periods of time.
+Get to know your neighbors and find out if your neighborhood has a website or social media page to stay connected.
+Create a list of local organizations that you and your household can contact in the event you need access to information, healthcare services, support, and resources.
+Create an emergency contact list of family, friends, neighbors, carpool drivers, health care providers, teachers, employers, the local public health department, and other community resources.
+</item>
+        <item>Practice everyday preventive actions to help reduce your risk of getting sick and remind everyone in your home to do the same. These actions are especially important for older adults and people who have severe chronic medical conditions:
+
+Avoid close contact with people who are sick.
+Stay home when you are sick, except to get medical care.
+Cover your coughs and sneezes with a tissue and throw the tissue in the trash.
+Wash your hands often with soap and water for at least 20 seconds, especially after blowing your nose, coughing, or sneezing; going to the bathroom; and before eating or preparing food.
+If soap and water are not readily available, use an alcohol-based hand sanitizer with at least 60% alcohol. Always wash hands with soap and water if hands are visibly dirty.
+Clean and disinfect frequently touched surfaces and objects (e.g., tables, countertops, light switches, doorknobs, and cabinet handles).
+Launder items, including washable plush toys, as appropriate and in accordance with the manufacturer’s instructions. If possible, launder items using the warmest appropriate water setting for the items and dry items completely. Dirty laundry from an ill person can be washed with other people’s items.</item>
+        <item>Most people who get COVID-19 will be able to recover at home. CDC has directions for people who are recovering at home and their caregivers, including:
+Stay home when you are sick, except to get medical care.
+Seek emergency medical attention if symptoms get severe.
+Call the coronavirus helpline for your state or call ahead to your local emergency facility and notify the operator that you are seeking care for someone who has or may have COVID-19.
+Use a separate room and bathroom for sick household members (if possible).
+Wash your hands often with soap and water for at least 20 seconds, especially after blowing your nose, coughing, or sneezing; going to the bathroom; and before eating or preparing food.
+If soap and water are not readily available, use an alcohol-based hand sanitizer with at least 60% alcohol. Always wash hands with soap and water if hands are visibly dirty.
+Provide your sick household member with clean disposable facemasks to wear at home, if available, to help prevent spreading COVID-19 to others.
+Clean the sick room and bathroom, as needed, to avoid unnecessary contact with the sick person.
+Avoid sharing personal items like utensils, food, and drinks.
+</item>
+        <item>Talk to the school or facility about their emergency operations plan. Understand the plan for continuing education and social services (such as student meal programs) during school dismissals. If your child attends a college or university, encourage them to learn about the school’s plan for a COVID-19 outbreak.</item>
+        <item>Plan for potential changes at your workplace. Talk to your employer about their emergency operations plan, including sick-leave policies and telework options. Learn how businesses and employers can plan for and respond to COVID-19.</item>
+        <item>Handwashing is one of the best ways to protect yourself and your family from getting sick. Wash your hands often with soap and water for at least 20 seconds, especially after blowing your nose, coughing, or sneezing; going to the bathroom; and before eating or preparing food. If soap and water are not readily available, use an alcohol-based hand sanitizer with at least 60% alcohol.</item>
+        <item>Clean and disinfect frequently touched surfaces such as tables, doorknobs, light switches, countertops, handles, desks, phones, keyboards, toilets, faucets, and sinks.  If surfaces are dirty, clean them using detergent or soap and water prior to disinfection. To disinfect, most common EPA-registered household disinfectants will work.</item>
+    </string-array>
+
+    <string-array name="outbreak_title">
+        <item>What should I do if there is an outbreak in my community?</item>
+        <item>Should I go to work if there is an outbreak in my community?</item>
+    </string-array>
+
+    <string-array name="outbreak_text">
+        <item>During an outbreak, stay calm and put your preparedness plan to work. Follow the steps below:
+
+Protect yourself and others.
+
+Stay home if you are sick. Keep away from people who are sick. Limit close contact with others as much as possible (about 6 feet).
+Put your household plan into action.
+
+Stay informed about the local COVID-19 situation. Be aware of temporary school dismissals in your area, as this may affect your household’s daily routine.
+Continue practicing everyday preventive actions. Cover coughs and sneezes with a tissue and wash your hands often with soap and water for at least 20 seconds. If soap and water are not available, use a hand sanitizer that contains 60% alcohol. Clean frequently touched surfaces and objects daily using a regular household detergent and water.
+Notify your workplace as soon as possible if your regular work schedule changes. Ask to work from home or take leave if you or someone in your household gets sick with COVID-19 symptoms, or if your child’s school is dismissed temporarily. Learn how businesses and employers can plan for and respond to COVID-19.
+Stay in touch with others by phone or email. If you have a chronic medical condition and live alone, ask family, friends, and health care providers to check on you during an outbreak. Stay in touch with family and friends, especially those at increased risk of developing severe illness, such as older adults and people with severe chronic medical conditions.</item>
+        <item>Follow the advice of your local health officials. Stay home if you can. Talk to your employer to discuss working from home, taking leave if you or someone in your household gets sick with COVID-19 symptoms, or if your child’s school is dismissed temporarily. Employers should be aware that more employees may need to stay at home to care for sick children or other sick family members than is usual in case of a community outbreak.</item>
+    </string-array>
+
+    <string-array name="symptoms_title">
+        <item>What are the symptoms &amp; complications that COVID-19 can cause?</item>
+        <item>Is it possible to have the flu &amp; COVID-19 at the same time?</item>
+        <item>Should I be tested for COVID-19?</item>
+        <item>How can I get tested for COVID-19?</item>
+        <item>Can someone test negative &amp; later test positive on a viral test for COVID-19?</item>
+        <item>What kind of tests are being used to diagnose COVID-19?</item>
+        <item>What is antibody testing &amp; can I be tested using this method?</item>
+        <item>If I have recovered from COVID-19, will I be immune to it?</item>
+    </string-array>
+
+    <string-array name="symptoms_text">
+        <item>People with COVID-19 have had a wide range of symptoms reported – ranging from mild symptoms to severe illness. Symptoms may appear 2-14 days after exposure to the virus. People with these symptoms may have COVID-19:
+Fever or chills
+Cough
+Shortness of breath or difficulty breathing
+Fatigue
+Muscle or body aches
+Headache
+New loss of taste or smell
+Sore throat
+Congestion or runny nose
+Nausea or vomiting
+Diarrhea
+This list does not include all possible symptoms.More symptoms will be updated as more research is done on the disease.
+</item>
+        <item>Yes. It is possible to test positive for flu (as well as other respiratory infections) and COVID-19 at the same time.</item>
+        <item>Maybe; not everyone needs to be tested for COVID-19.
+If you have symptoms of COVID-19 and want to get tested, call your healthcare provider or doctor first &amp; then decide on his/her advice or get tested at a private or govt. testing centre near you.</item>
+        <item>Two kinds of tests are available for COVID-19: viral tests and antibody tests. A viral test checks for a current infection. An antibody test checks for a previous infection.These depend on the testing centre so find out the type of test being offered at a test centre of your choice near you &amp; get tested.</item>
+        <item>Yes, it is possible. You may test negative if the sample was collected early in your infection and test positive later during this illness. You could also be exposed to COVID-19 after the test and get infected then. Even if you test negative, you still should take steps to protect yourself and others.</item>
+        <item>Viral tests are used to diagnose COVID-19. These tests tell you if you currently have an infection with the virus that causes COVID-19. There are many viral tests available. All of the viral tests identify the virus in respiratory samples, such as from swabs from the inside of your nose.
+Some tests are conducted at the testing site you visit, and results are available to you within minutes. Other tests must be sent to a laboratory to analyze, a process that takes 1-2 days once the laboratory receives your samples. Two tests allow you to collect your sample at home – either a swab from the inside of your nose or a saliva sample – but you will still need to send the sample to a laboratory for processing.
+Locations and types of testing sites vary depending on where you live.
+</item>
+        <item>Antibody testing checks a sample of a person’s blood to look for antibodies to the virus that causes COVID-19. When someone gets COVID-19, their body usually makes antibodies. However, it typically takes one to three weeks to develop these antibodies. Some people may take even longer to develop antibodies, and some people may not develop antibodies. A positive result from this test may mean that person was previously infected with the virus. Talk to your healthcare provider about what your antibody test result means.
+
+Antibody tests should not be used to diagnose COVID-19. To see if you are currently infected, you need a viral test. Viral tests identify the virus in respiratory samples, such as swabs from the inside of your nose.
+
+We do not know yet if having antibodies to the virus that causes COVID-19 can protect someone from getting infected again or, if they do, how long this protection might last. Scientists are conducting research to answer those questions.</item>
+        <item>We do not know yet if people who recover from COVID-19 can get infected again. Scientists are investigating to determine if a person can get sick with COVID-19 more than once. Until we know more, continue to take steps to protect yourself and others.</item>
+    </string-array>
+
+    <string-array name="risk_title">
+        <item>Who is at higher risk for serious illness from COVID-19?</item>
+        <item>What should people at higher risk of serious illness with COVID-19 do?</item>
+        <item>How were the underlying conditions for people considered higher risk for serious illness with COVID-19 selected?</item>
+        <item>Are there any medications I should avoid taking if I have COVID-19?</item>
+        <item>What about underlying medical conditions that are not included in this list?</item>
+        <item>What does a well-controlled health condition mean?</item>
+        <item>What does more severe illness mean?</item>
+        <item>Are people with disabilities at higher risk?</item>
+    </string-array>
+
+    <string-array name="risk_text">
+        <item>COVID-19 is a new disease and there is limited information regarding risk factors for severe disease. Based on currently available information and clinical expertise, older adults and people of any age who have serious underlying medical conditions might be at higher risk for severe illness from COVID-19.
+Based on what we know now, those at high-risk for severe illness from COVID-19 are:
+People aged 65 years and older
+People who live in a nursing home or long-term care facility
+People of all ages with underlying medical conditions, particularly if not well controlled, including:
+People with chronic lung disease or moderate to severe asthma
+People who have serious heart conditions
+People who are immunocompromised
+Many conditions can cause a person to be immunocompromised, including cancer treatment, smoking, bone marrow or organ transplantation, immune deficiencies, poorly controlled HIV or AIDS, and prolonged use of corticosteroids and other immune weakening medications
+People with severe obesity (body mass index [BMI] ≥40)
+People with diabetes
+People with chronic kidney disease undergoing dialysis
+People with liver disease
+</item>
+        <item>If you are at higher risk of getting very sick from COVID-19, you should:
+
+Stock up on supplies
+Take everyday precautions to keep space between yourself and others
+When you go out in public, keep away from others who are sick
+Limit close contact and wash your hands often
+Avoid crowds, cruise travel, and non-essential travel
+If there is an outbreak in your community, stay home as much as possible. Watch for symptoms and emergency signs. If you get sick, stay home and call your doctor.</item>
+        <item>This list is based on what we are learning from the outbreak in other countries and in India &amp; what we know about risk from other respiratory infections, like flu.</item>
+        <item>Currently, there is no evidence to show that taking ibuprofen or naproxen can lead to a more severe infection of COVID-19.
+
+People with high blood pressure should take their blood pressure medications, as directed, and work with their healthcare provider to make sure that their blood pressure is as well controlled as possible. Any changes to your medications should only be made by your healthcare provider.</item>
+        <item>Based on available information, adults aged 65 years and older and people of any age with underlying medical conditions included on this list are at higher risk for severe illness and poorer outcomes from COVID-19. People with underlying medical conditions not on the list might also be at higher risk and should consult with their healthcare provider if they are concerned.
+We encourage all people, regardless of risk, to:
+Take steps to protect yourself and others.
+Call your healthcare provider if you are sick with a fever, cough, or shortness of breath.</item>
+        <item>Generally, well-controlled means that your condition is stable, not life-threatening, and laboratory assessments and other findings are as similar as possible to those without the health condition. You should talk with your healthcare provider if you have a question about your health or how your health condition is being managed.</item>
+        <item>Severity typically means how much impact the illness or condition has on your body’s function.  You should talk with your healthcare provider if you have a question about your health or how your health condition is being managed.</item>
+        <item>Most people with disabilities are not inherently at higher risk for becoming infected with or having severe illness from COVID-19.  Some people with physical limitations or other disabilities might be at a higher risk of infection because of their underlying medical condition.
+
+People with certain disabilities might experience higher rates of chronic health conditions that put them at higher risk of serious illness and poorer outcomes from COVID-19. Adults with disabilities are three times more likely to have heart disease, stroke, diabetes, or cancer than adults without disabilities.
+You should talk with your healthcare provider if you have a question about your health or how your health condition is being managed.</item>
+    </string-array>
+
+    <string-array name="bp_title">
+        <item>Are people with higher blood pressure(hypertension) at higher risk from COVID-19?</item>
+        <item>Should I continue to take my blood pressure medication?</item>
+    </string-array>
+
+    <string-array name="bp_text">
+        <item>At this time, we do not think that people with high blood pressure and no other underlying health conditions are more likely than others to get severely ill from COVID-19. Although many people who have gotten severely ill from COVID-19 have high blood pressure, they are often older or have other medical conditions like obesity, diabetes, and serious heart conditions that place them at higher risk of severe illness from COVID-19.
+
+If you have high blood pressure, it’s critically important that you keep your blood pressure under control to lower your risk for heart disease and strokes. Take your blood pressure medications as directed, keep a log of your blood pressure every day if you are able to take your blood pressure at home, and work with your healthcare team to make sure your blood pressure is well controlled. Any changes to your medications should be made in consultation with your healthcare team.</item>
+        <item>Yes. Continue to take your blood pressure medications exactly as prescribed and make lifestyle modifications agreed upon in your treatment plan. Continue all your regular medications, including angiotensin-converting enzyme inhibitors (ACE-Is) or angiotensin receptor blockers (ARBs), as prescribed by your healthcare team.</item>
+    </string-array>
+
+    <string-array name="pet_title">
+        <item>Can I get COVID-19 from my pets or other animals?</item>
+        <item>Do I need to get my pet tested for COVID-19?</item>
+        <item>Can animals carry the virus that causes COVID-19 on their skin or fur?</item>
+        <item>Should I avoid contact with pets or other animals if I am sick with COVID-19?</item>
+        <item>Should I worry about my pet cat?</item>
+        <item>Can I walk my dog?</item>
+        <item>What should I do if my pets gets sick and I think its COVID-19?</item>
+        <item>Why are the animals being tested when many people can\'t get tested?</item>
+    </string-array>
+
+    <string-array name="pet_text">
+        <item>At this time, there is no evidence that animals play a significant role in spreading the virus that causes COVID-19. Based on the limited information available to date, the risk of animals spreading COVID-19 to people is considered to be low.  A small number of pets have been reported to be infected with the virus that causes COVID-19, mostly after contact with people with COVID-19.
+
+Pets have other types of coronaviruses that can make them sick, like canine and feline coronaviruses. These other coronaviruses cannot infect people and are not related to the current COVID-19 outbreak.
+
+However, since animals can spread other diseases to people, it’s always a good idea to practice healthy habits around pets and other animals, such as washing your hands and maintaining good hygiene.</item>
+        <item>No. At this time, routine testing of animals for COVID-19 is not recommended.</item>
+        <item>Although we know certain bacteria and fungi can be carried on fur and hair, there is no evidence that viruses, including the virus that causes COVID-19, can spread to people from the skin, fur, or hair of pets.
+
+However, because animals can sometimes carry other germs that can make people sick, it’s always a good idea to practice healthy habits around pets and other animals, including washing hands before and after interacting with them.</item>
+        <item>We are still learning about this virus, but it appears that it can spread from people to animals in some situations. Until we learn more about this new coronavirus, you should restrict contact with pets and other animals while you are sick with COVID-19, just like you would with people. When possible, have another member of your household care for your animals while you are sick. If you are sick with COVID-19, avoid contact with your pet, including
+
+Petting
+Snuggling
+Being kissed or licked
+Sharing food or bedding
+If you must care for your pet or be around animals while you are sick, wash your hands before and after you interact with pets and wear a cloth face covering.</item>
+        <item>We are still learning about this virus and how it spreads, but it appears it can spread from humans to animals in some situations. CDC is aware of a small number of pets, including cats, reported to be infected with the virus that causes COVID-19, mostly after close contact with people with COVID-19. Most of these animals had contact with a person with COVID-19. A tiger at a New York zoo has also tested positive for the virus that causes COVID-19.
+
+At this time, there is no evidence that animals play a significant role in spreading the virus that causes COVID-19. Based on the limited data available, the risk of animals spreading COVID-19 to people is considered to be low. The virus that causes COVID-19 spreads mainly from person to person, typically through respiratory droplets from coughing, sneezing, or talking.
+
+People sick with COVID-19 should isolate themselves from other people and animals, including pets, during their illness until we know more about how this virus affects animals. If you must care for your pet or be around animals while you are sick, wear a cloth face covering and wash your hands before and after you interact with pets.</item>
+        <item>Walking a dog is important for both animal and human health and well-being. Walk dogs on a leash, maintaining at least 6 feet (2 meters) from other people and animals, do not gather in groups, and stay out of crowded places and avoid mass gatherings. Do not go to dog parks or public places where a large number of people and dogs gather. To help maintain social distancing, do not let other people pet your dog when you are out for a walk.</item>
+        <item>There is a small number of animals around the world reported to be infected with the virus that causes COVID-19, mostly after having contact with a person with COVID-19. Talk to your veterinarian about any health concerns you have about your pets.
+
+If your pet gets sick after contact with a person with COVID-19, do not take your pet to the veterinary clinic yourself. Call your veterinarian and let them know the pet was around a person with COVID-19. Some veterinarians may offer telemedicine consultations or other plans for seeing sick pets. Your veterinarian can evaluate your pet and determine the next steps for your pet’s treatment and care.</item>
+        <item>Animals are only being tested in very rare circumstances. Routine testing of animals is not recommended at this time, and any tests done on animals are done on a case by case basis. For example, if the pet of a COVID-19 patient has a new, concerning illness with symptoms similar to those of COVID-19, the animal’s veterinarian might consult with public health and animal health officials to determine if testing is needed.</item>
+    </string-array>
+
 </resources>

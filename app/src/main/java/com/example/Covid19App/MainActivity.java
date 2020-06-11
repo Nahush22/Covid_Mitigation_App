@@ -58,6 +58,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     String docLocation;
 
+    String storeId;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     GoogleMap map;
@@ -158,7 +160,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mainStoreMap);
         mapFragment.getMapAsync(this);
 
         loadStoreDoc();
@@ -172,6 +174,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 //            startActivity(new Intent(this, StoreProductUpdateActivity.class));
 //        }
 
+        checkPrevReg();
+
+        if(storeId.equals(userID)) {
+            finish();
+            startActivity(new Intent(this, StoreProductUpdateActivity.class));
+        }
+
         sellerReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +188,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+    }
+
+    private void checkPrevReg() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        storeId = sharedPreferences.getString(KEY, "India");
     }
 
     private void verifyDetails() {
@@ -241,29 +255,47 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        String storeId = uStoreName.getText().toString() + uName.getText().toString();
+//        String storeId = uStoreName.getText().toString() + uName.getText().toString();
+
+        String storeId = userID;
 
         seller.put("StoreId", storeId);
 
         saveStoreDoc(storeId);
 
-        db.collection("SellerID")
-                .add(seller)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//        db.collection("SellerID")
+//                .add(seller)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error adding document", e);
+//                    }
+//                });
+
+        db.collection("SellerID").document(userID)
+                .set(seller)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
 
         Toast.makeText(this, "Seller Registered", Toast.LENGTH_SHORT).show();
 
+        finish();
         startActivity(new Intent(this,StoreProductUpdateActivity.class));
     }
 

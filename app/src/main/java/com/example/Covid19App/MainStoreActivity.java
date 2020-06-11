@@ -6,27 +6,28 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class MainStoreActivity extends AppCompatActivity {
 
-    Button userActivityBtn, sellerActivityBtn;
+    CardView buyCard, sellCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_store);
 
-        userActivityBtn = findViewById(R.id.userBtn);
-        sellerActivityBtn = findViewById(R.id.sellerBtn);
+        buyCard = findViewById(R.id.buyCard);
+        sellCard = findViewById(R.id.sellCard);
 
-        userActivityBtn.setOnClickListener(new View.OnClickListener() {
+        buyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), StoreList.class));
             }
         });
 
-        sellerActivityBtn.setOnClickListener(new View.OnClickListener() {
+        sellCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
