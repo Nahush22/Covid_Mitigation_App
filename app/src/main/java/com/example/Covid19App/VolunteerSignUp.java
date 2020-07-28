@@ -93,10 +93,10 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
             Toast.makeText(this, "Location permission not given", Toast.LENGTH_SHORT).show();
         }
 
-//        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-//        {
-//            locationEnabled();
-//        }
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            Toast.makeText(this, "Gps not enabled", Toast.LENGTH_SHORT).show();
+        }
 
 
         locationListener = new LocationListener() {
@@ -159,7 +159,7 @@ public class VolunteerSignUp extends AppCompatActivity implements OnMapReadyCall
 
         if(volunteerExists.isEmpty())
         {
-            Toast.makeText(this, "Create new seller id", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Create new volunteer id", Toast.LENGTH_SHORT).show();
         }
         else
         {

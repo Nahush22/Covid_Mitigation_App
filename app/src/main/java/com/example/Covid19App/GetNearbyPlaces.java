@@ -1,6 +1,8 @@
 package com.example.Covid19App;
 
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +28,7 @@ public class GetNearbyPlaces extends AsyncTask<Object, String, String> {
         DownloadUrl downloadUrl = new DownloadUrl();
         try {
             googlePlaceData = downloadUrl.ReadTheURL(url);
+            Log.d("Data recvd:" ,googlePlaceData);
         } catch (IOException e) {
             e.printStackTrace();
         }

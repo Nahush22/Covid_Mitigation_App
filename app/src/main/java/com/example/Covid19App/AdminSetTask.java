@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,10 +43,12 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
     String taskSMS;
 
     EditText taskBrief, taskDesc, taskAddress;
+    TextView mapTxt;
     Button taskAssignBtn;
 
     private static final String TAG = "AdminSetTask";
     GoogleMap map;
+    TextView mapLocTxt;
 
     LatLng clickLng;
 
@@ -74,6 +77,11 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
 
     String volId, volAddress, volNo, adminNo;
 
+    String type = "Volunteer";
+
+    String foodTask = null;
+    String foodLat, foodLng, foodAddr, foodId, foodNo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,9 +91,43 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
         taskDesc = findViewById(R.id.adminTaskDesc);
         taskAddress = findViewById(R.id.adminTaskAddress);
 
+        mapLocTxt = findViewById(R.id.textView10);
+
+        mapTxt = findViewById(R.id.adminMapTxt);
+
         taskAssignBtn = findViewById(R.id.adminAssignBtn);
 
         loadVolData();
+
+        Bundle b = getIntent().getExtras();
+
+        if(b != null)
+        {
+            type = b.getString("Type");
+
+            if(b.getString("Task") != null)
+            {
+                foodTask = b.getString("Task");
+                foodId = b.getString("Id");
+                foodNo = b.getString("No");
+                foodAddr = b.getString("Address");
+                foodLat = b.getString("Lat");
+                foodLng = b.getString("Lng");
+
+                taskBrief.setText("Food Collection");
+                taskAddress.setText(foodAddr);
+                taskDesc.setHint("Enter any additional details");
+
+                taskBrief.setFocusable(false);
+                taskAddress.setFocusable(false);
+//                taskDesc.setClickable(false);
+
+//                mapTxt.setVisibility(View.VISIBLE);
+
+            }
+        }
+
+//        Toast.makeText(this, type + " no:" + volNo , Toast.LENGTH_SHORT).show();
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
@@ -171,6 +213,12 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.adminTaskMap);
         mapFragment.getMapAsync(this);
 
+        if(foodTask != null)
+        {
+            mapLocTxt.setVisibility(View.GONE);
+            mapFragment.getView().setVisibility(View.GONE);
+        }
+
         taskAssignBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,12 +286,23 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
             myLong = clickLng.longitude;
         }
 
-        adminNo = "9444050540";
+//        adminNo = "9444050540";
+
+        String assignedTask = taskDesc.getText().toString();
+
+        if(foodTask != null)
+        {
+            myLat = Double.valueOf(foodLat);
+            myLong = Double.valueOf(foodLng);
+
+            assignedTask += foodTask;
+        }
+
 
         Map<String, Object> task = new HashMap<>();
         task.put("AdminID", userID);
         task.put("Brief", taskBrief.getText().toString());
-        task.put("Description", taskDesc.getText().toString());
+        task.put("Description", assignedTask);
         task.put("Address", taskAddress.getText().toString());
         task.put("VolunteerID", volId);
         task.put("Latitude", String.valueOf(myLat));
@@ -256,55 +315,142 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
         task.put("Acknowledgement", 0);
         task.put("AdminNo", adminNo);
 
+
+
+//        Toast.makeText(this, "inside update task db assignment", Toast.LENGTH_SHORT).show();
+
         taskSMS = userID + "has assigned a task:" + "\n" + "Brief:" + taskBrief.getText().toString() + "\n" + "Address:" + taskAddress.getText().toString() + "\n" + "View the task in the app & select your choice!Contact the admin through this number for more details!";
 
+//        Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
 
-        db.collection("VolunteerID").document(volId).collection("Tasks")
-                .add(task)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        if(type.equals("Volunteer"))
+        {
+            task.put("Type","Volunteer");
 
-        db.collection("VolunteerID").document(volId)
-                .update("Assigned", 1)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+            db.collection("VolunteerID").document(volId).collection("Tasks")
+                    .add(task)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
 
-        db.collection("DataStorage").document("Admin").collection("AdminCollection").document(userID).collection("Tasks")
-                .add(task)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+            db.collection("VolunteerID").document(volId)
+                    .update("Assigned", 1)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
 
-        volNo = "9444050540";
+            db.collection("DataStorage").document("Admin").collection("AdminCollection").document(userID).collection("Tasks")
+                    .add(task)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
+        else if(type.equals("Health") || type.equals("Essential"))
+        {
+            task.put("Type","Worker");
+
+            db.collection("Worker").document(volId).collection("Tasks")
+                    .add(task)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+
+            db.collection("Worker").document(volId)
+                    .update("Assigned", 1)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+
+            db.collection("DataStorage").document("Admin").collection("AdminCollection").document(userID).collection("Tasks")
+                    .add(task)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
+
+//        volNo = "9444050540";
+//        foodNo = "9444050540";
+
+        if(foodTask != null)
+        {
+            db.collection("Food").document(foodId)
+                    .update("Assigned", 1)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
+            {
+                taskSMS = "A volunteer has been assigned to collect the food. You can contact him at " + volNo;
+
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(foodNo, null, taskSMS, null, null);
+                Toast.makeText(this, "SMS sent!", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
         {
@@ -317,7 +463,7 @@ public class AdminSetTask extends AppCompatActivity implements OnMapReadyCallbac
         Toast.makeText(this, "Task Assigned!Wait for volunteer confirmation!", Toast.LENGTH_SHORT).show();
 
         finish();
-        startActivity(new Intent(this,VolunteerList.class));
+//        startActivity(new Intent(this,VolunteerList.class));
 
     }
 

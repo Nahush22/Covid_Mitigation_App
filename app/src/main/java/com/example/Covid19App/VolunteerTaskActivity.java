@@ -267,7 +267,7 @@ public class VolunteerTaskActivity extends AppCompatActivity {
         stopLocationService();
 
         finish();
-        startActivity(new Intent(this,LauncherActivity.class));
+        startActivity(new Intent(this,App_Home.class));
     }
 
     private void rejectTask() {
@@ -462,6 +462,7 @@ public class VolunteerTaskActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Task accepted!User location will now be tracked to ensure social distancing.This can be disabled by rejecting or completing the task.")
                     .setTitle("Alert:")
+                    .setCancelable(false)
                     .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
 
@@ -470,7 +471,7 @@ public class VolunteerTaskActivity extends AppCompatActivity {
 
                             ContextCompat.startForegroundService(VolunteerTaskActivity.this, serviceIntent);
 
-                            Toast.makeText(getApplicationContext(), "Items Ordered successfully", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getApplicationContext(), "User location is now being tacked...", Toast.LENGTH_LONG).show();
 
                         }
                     });
@@ -516,7 +517,7 @@ public class VolunteerTaskActivity extends AppCompatActivity {
                 });
 
         finish();
-        startActivity(new Intent(this, LauncherActivity.class));
+        startActivity(new Intent(this, App_Home.class));
 
         Toast.makeText(this, "Location monitor stopped", Toast.LENGTH_SHORT).show();
     }

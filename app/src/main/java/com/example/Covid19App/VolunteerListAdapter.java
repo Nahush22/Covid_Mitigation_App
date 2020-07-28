@@ -37,7 +37,6 @@ public class VolunteerListAdapter extends RecyclerView.Adapter<VolunteerListAdap
     @NonNull
     @Override
     public VolunteerListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.volunteer_list, parent, false);
         return new MyViewHolder(view);
@@ -53,8 +52,6 @@ public class VolunteerListAdapter extends RecyclerView.Adapter<VolunteerListAdap
             holder.address.setText(volunteerAdapterAddress.get(position));
             holder.number.setText(volunteerAdapterNumber.get(position));
         }
-
-
 
         holder.volunteerList.setOnClickListener(new View.OnClickListener() {
             @Override

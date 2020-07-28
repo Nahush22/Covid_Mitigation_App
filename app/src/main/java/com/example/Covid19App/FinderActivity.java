@@ -47,6 +47,8 @@ public class FinderActivity extends FragmentActivity implements
         LocationListener
 {
 
+    //Runtime loc req- https://stackoverflow.com/questions/40142331/how-to-request-location-permission-at-runtime
+
     protected LocationManager locationManager;
     protected android.location.LocationListener locationListener;
 

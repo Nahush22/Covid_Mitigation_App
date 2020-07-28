@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,10 +29,15 @@ import java.util.ArrayList;
 
 public class AdminTaskCompletionList extends AppCompatActivity {
 
+    TextView noTask;
+    ProgressBar progressBar;
+
     private static final String TAG = "AdminTaskCompletionList:";
     ArrayList<String> brief = new ArrayList<>();
     ArrayList<String> volId = new ArrayList<>();
     ArrayList<String> docId = new ArrayList<>();
+
+    ArrayList<String> type = new ArrayList<>();
 
     String userId;
     int position;
@@ -48,6 +56,9 @@ public class AdminTaskCompletionList extends AppCompatActivity {
         setContentView(R.layout.activity_admin_task_completion_list);
 
         loadUserId();
+
+        noTask = findViewById(R.id.adminNoTaskTxt);
+        progressBar = findViewById(R.id.adminComplReqProgBar);
 
         taskView = findViewById(R.id.adminTaskRecyclerView);
         taskView.setLayoutManager(new LinearLayoutManager(this));
@@ -113,23 +124,45 @@ public class AdminTaskCompletionList extends AppCompatActivity {
                     }
                 });
 
-        db.collection("VolunteerID").document(volId.get(position))
-                .update("Assigned", 0)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+        if(type.get(position).equals("Volunteer"))
+        {
+            db.collection("VolunteerID").document(volId.get(position))
+                    .update("Assigned", 0)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
 
-                        Toast.makeText(AdminTaskCompletionList.this, "Task completion request accepted", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+                            Toast.makeText(AdminTaskCompletionList.this, "Task completion request accepted", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+        }
+        else
+        {
+            db.collection("Worker").document(volId.get(position))
+                    .update("Assigned", 0)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully updated!");
 
+                            Toast.makeText(AdminTaskCompletionList.this, "Task completion request accepted", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+
+        }
 
 
     }
@@ -157,6 +190,8 @@ public class AdminTaskCompletionList extends AppCompatActivity {
                             volId.clear();
                             docId.clear();
 
+                            type.clear();
+
 
                             for (QueryDocumentSnapshot document : snapshot) {
                                 if(document.get("Brief") != null && document.get("VolunteerID") != null && document.get("AdminID").toString().equals(userId)) {
@@ -164,8 +199,15 @@ public class AdminTaskCompletionList extends AppCompatActivity {
                                     brief.add(document.get("Brief").toString());
                                     volId.add(document.get("VolunteerID").toString());
 
+                                    type.add(document.get("Type").toString());
+
                                 }
                             }
+
+                            if(docId.size()==0)
+                                noTask.setVisibility(View.VISIBLE);
+                            else
+                                noTask.setVisibility(View.GONE);
 
                             recyclerViewInitialise();
 
@@ -178,9 +220,9 @@ public class AdminTaskCompletionList extends AppCompatActivity {
 
     private void getStoredData() {
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Fetching Completion Requests");
-        progressDialog.show();
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage("Fetching Completion Requests");
+//        progressDialog.show();
 
         db.collection("DataStorage").document("Admin").collection("AdminCollection").document(userId).collection("Tasks")
                 .whereEqualTo("CompletionRequest", 1)
@@ -188,6 +230,9 @@ public class AdminTaskCompletionList extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        progressBar.setVisibility(View.GONE);
+
                         if (task.isSuccessful()) {
 
                             docId.clear();
@@ -202,12 +247,19 @@ public class AdminTaskCompletionList extends AppCompatActivity {
                                     brief.add(document.get("Brief").toString());
                                     volId.add(document.get("VolunteerID").toString());
 
+                                    type.add(document.get("Type").toString());
+
                                 }
                             }
 
+                            if(docId.size()==0)
+                                noTask.setVisibility(View.VISIBLE);
+                            else
+                                noTask.setVisibility(View.GONE);
+
                             recyclerViewInitialise();
 
-                            progressDialog.dismiss();
+//                            progressDialog.dismiss();
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }

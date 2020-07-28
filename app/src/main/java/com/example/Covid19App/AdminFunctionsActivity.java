@@ -12,7 +12,7 @@ public class AdminFunctionsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    CardView scanCard, taskCard, reqCard;
+    CardView scanCard, taskCard, reqCard, foodCard, migrantCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,8 @@ public class AdminFunctionsActivity extends AppCompatActivity {
         scanCard = findViewById(R.id.scanCard);
         taskCard = findViewById(R.id.taskCard);
         reqCard = findViewById(R.id.reqCard);
+        foodCard = findViewById(R.id.foodCard);
+        migrantCard = findViewById(R.id.migrantTrackerCard);
 
         scanCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,19 @@ public class AdminFunctionsActivity extends AppCompatActivity {
             }
         });
 
+        foodCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminFunctionsActivity.this, FoodLenderList.class));
+            }
+        });
+
+        migrantCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminFunctionsActivity.this, MigrantTrackingActivity.class));
+            }
+        });
 
     }
 }

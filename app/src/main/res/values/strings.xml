@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Covid19 MitiGATOR</string>
-    <string name="map_key" translatable="false">AIzaSyC99WpgGq-xPRvGCuct0gfyl7__CnGAJlw</string>
+    <string name="map_key" translatable="false">AIzaSyCqiZ0Ssb7S5HE_VZVIu6e3AVJ8PKM7ggo</string>
 
     <string-array name="unitType_array">
         <item>Kg</item>
@@ -383,5 +383,18 @@ People sick with COVID-19 should isolate themselves from other people and animal
 If your pet gets sick after contact with a person with COVID-19, do not take your pet to the veterinary clinic yourself. Call your veterinarian and let them know the pet was around a person with COVID-19. Some veterinarians may offer telemedicine consultations or other plans for seeing sick pets. Your veterinarian can evaluate your pet and determine the next steps for your pet’s treatment and care.</item>
         <item>Animals are only being tested in very rare circumstances. Routine testing of animals is not recommended at this time, and any tests done on animals are done on a case by case basis. For example, if the pet of a COVID-19 patient has a new, concerning illness with symptoms similar to those of COVID-19, the animal’s veterinarian might consult with public health and animal health officials to determine if testing is needed.</item>
     </string-array>
+    <string name="title_activity_main_navigation">MainNavigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_app_home_page">AppHomePage</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

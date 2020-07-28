@@ -12,7 +12,7 @@
         android:id="@+id/volListReqTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No completion requests currently..."
+        android:text="No volunteers present..."
         android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,8 +23,19 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/volunteerListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volunteerListSpinner" />
+
+    <Spinner
+        android:id="@+id/volunteerListSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

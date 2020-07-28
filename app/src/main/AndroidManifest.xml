@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.Covid19App">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -26,7 +27,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SymptomsActivity"></activity>
+        <activity android:name=".MigrantDetails"></activity>
+        <activity android:name=".MigrantTrackingActivity" />
+        <activity android:name=".MigrantLocationSignUp" />
+        <activity android:name=".MigrantSignUp" />
+        <activity android:name=".FoodAdminActivity" />
+        <activity android:name=".FoodLenderList" />
+        <activity android:name=".FoodAddressActivity" />
+        <activity android:name=".FoodLocationActivity" />
+        <activity android:name=".WorkerRequestDetails" />
+        <activity android:name=".WorkerRequestList" />
+        <activity android:name=".WorkerTaskActivity" />
+        <activity android:name=".WorkerLocation" />
+        <activity android:name="com.example.sellermodule.WorkerLocationActivity" />
+        <activity android:name=".WorkerSignUp" />
+        <activity
+            android:name=".VideoPlayerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".VideoListActivity" />
+        <activity android:name=".PlayListActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".App_Home" />
+        <activity
+            android:name=".AppHomePage"
+            android:label="@string/title_activity_app_home_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainNavigation"
+            android:label="@string/title_activity_main_navigation" />
+        <activity android:name=".SymptomsActivity" />
         <activity android:name=".FaqActivity" />
         <activity android:name=".BasicsList" />
         <activity android:name=".RequestsActivity" />

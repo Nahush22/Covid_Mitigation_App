@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,7 +34,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
-import static android.provider.Contacts.SettingsColumns.KEY;
 
 public class LocationMonitorService extends Service {
 
@@ -79,8 +77,6 @@ public class LocationMonitorService extends Service {
 
 //        https://stackoverflow.com/questions/5265913/how-to-use-putextra-and-getextra-for-string-data
 
-
-
         getUserID();
 
         Bundle extras = intent.getExtras();
@@ -92,10 +88,13 @@ public class LocationMonitorService extends Service {
                 storeId = extras.getString("storeId");
                 transacId = extras.getString("transacId");
 
+                    initialiseStoreDbListener();
 
-                    initialiseDbListener();
+            }
 
-
+            if(extras.getString("type").equals("vol"))
+            {
+                initialiseVolunteerDbListener();
             }
 
         }
@@ -127,7 +126,59 @@ public class LocationMonitorService extends Service {
 
     }
 
-    private void initialiseDbListener() {
+    private void deleteLocationDoc() {
+        db.collection("Location").document(userID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+//                        Toast.makeText(LocationMonitorService.this, "Location details deleted!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
+    private void initialiseVolunteerDbListener() {
+
+        final DocumentReference docRef = db.collection("VolunteerID").document(userID);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                String source = snapshot != null && snapshot.getMetadata().hasPendingWrites()
+                        ? "Local" : "Server";
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, source + " data: " + snapshot.getData());
+
+                    if(snapshot.get("Assigned").toString().equals("0"))
+                    {
+                        stopSelf(); //https://stackoverflow.com/questions/55930516/how-to-force-stop-android-service-programmatically
+
+                        deleteLocationDoc();
+                        Toast.makeText(LocationMonitorService.this, "Admin has accepted task completion request...location service has been closed", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Log.d(TAG, source + " data: null");
+                }
+            }
+        });
+
+    }
+
+    private void initialiseStoreDbListener() {
 
         final DocumentReference docRef = db.collection("DataStorage").document("Users")
                 .collection(userID).document(transacId);
@@ -149,6 +200,8 @@ public class LocationMonitorService extends Service {
                     if(snapshot.get("Cancelled").toString().equals("1"))
                     {
                         stopSelf(); //https://stackoverflow.com/questions/55930516/how-to-force-stop-android-service-programmatically
+
+                        deleteLocationDoc();
                         Toast.makeText(LocationMonitorService.this, "Order has cancelled", Toast.LENGTH_SHORT).show();
                     }
 
@@ -165,8 +218,6 @@ public class LocationMonitorService extends Service {
         SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         userID = sharedPreferences.getString(ACTUALUSERID, "NAN");
         phoneNumber = sharedPreferences.getString(PHONENO, "NAN");
-
-
 
     }
 
