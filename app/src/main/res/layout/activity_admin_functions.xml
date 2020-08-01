@@ -32,6 +32,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#009688"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
@@ -73,6 +75,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#5DE2F3"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
@@ -123,6 +127,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#8BC34A"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
@@ -164,6 +170,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#1DE9B6"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
@@ -214,6 +222,8 @@
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#2979FF"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">

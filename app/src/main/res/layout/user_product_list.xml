@@ -28,6 +28,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="#FFFFFF"
                 android:text="  - "
+                android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userRecyclerProductName" />
 
@@ -39,6 +40,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="#FFFFFF"
                 android:text=" + "
+                android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintEnd_toStartOf="@+id/userMinusBtn"
                 app:layout_constraintTop_toBottomOf="@+id/userRecyclerProductName" />
 

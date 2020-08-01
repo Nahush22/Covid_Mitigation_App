@@ -1,6 +1,7 @@
 package com.example.Covid19App;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -12,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -25,7 +27,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -76,6 +80,14 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
 
         }
 
+
+
+//        initialiseDbListener();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.migrantMap);
+        mapFragment.getMapAsync(this);
+
+//        getData();
 
         locationListener = new LocationListener() {
             @Override
@@ -128,11 +140,69 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.migrantMap);
-        mapFragment.getMapAsync(this);
+    private void initialiseDbListener() {
 
-        getData();
+        db.collection("Migrants")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshot,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "listen:error", e);
+                            return;
+                        }
+
+                        String source = snapshot != null && snapshot.getMetadata().hasPendingWrites()
+                                ? "Local" : "Server";
+
+                        if(source == "Server")
+                        {
+                            migrants.clear();
+
+                            for (QueryDocumentSnapshot document : snapshot) {
+
+                                if(document.get("Name") != null ) {
+
+                                    String id = document.getId();
+                                    String name = document.get("Name").toString();
+                                    String no = document.get("Number").toString();
+                                    String home = document.get("Home").toString();
+                                    String current = document.get("Location").toString();
+                                    String gender = document.get("Gender").toString();
+                                    String lat = document.get("Latitude").toString().trim();
+                                    String lng = document.get("Longitude").toString().trim();
+
+                                    Toast.makeText(getApplicationContext(), name.trim(), Toast.LENGTH_SHORT).show();
+
+                                    MigrantClass migrantClass = new MigrantClass(id, name, no, home, current, gender, lat, lng);
+                                    migrants.add(migrantClass);
+
+//                                    Double latitude = Double.valueOf(lat);
+//                                    Double longitude = Double.valueOf(lng);
+//
+//                                    LatLng migrantLoc = new LatLng(latitude, longitude);
+//
+//                                    migrantMarkerOptions = new MarkerOptions().position(migrantLoc)
+//                                            .title("Migrant")
+////                                            .draggable(true)
+//                                            .icon(BitmapDescriptorFactory
+//                                                    .defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                    map.addMarker(migrantMarkerOptions).setTag(migrantClass); //https://developers.google.com/maps/documentation/android-sdk/marker
+
+                                }
+                            }
+
+                            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.migrantMap);
+                            mapFragment.getMapAsync(MigrantTrackingActivity.this);
+
+                        }
+
+
+                    }
+                });
+
     }
 
     private void getData() {
@@ -143,6 +213,8 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
@@ -156,8 +228,10 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
                                     String home = document.get("Home").toString();
                                     String current = document.get("Location").toString();
                                     String gender = document.get("Gender").toString();
-                                    String lat = document.get("Latitude").toString();
-                                    String lng = document.get("Longitude").toString();
+                                    String lat = document.get("Latitude").toString().trim();
+                                    String lng = document.get("Longitude").toString().trim();
+
+//                                    Toast.makeText(getApplicationContext(), name.trim(), Toast.LENGTH_SHORT).show();
 
                                     MigrantClass migrantClass = new MigrantClass(id, name, no, home, current, gender, lat, lng);
                                     migrants.add(migrantClass);
@@ -166,6 +240,9 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
                                     Double longitude = Double.valueOf(lng);
 
                                     LatLng migrantLoc = new LatLng(latitude, longitude);
+
+                                    //I am setting markers here since if this loads after map is loaded, then markers can be added...if this is loaded before then marker is stored in migrants arraylist &
+                                    //when map is loaded, then onMapReady prints the markers in array
 
                                     migrantMarkerOptions = new MarkerOptions().position(migrantLoc)
                                             .title("Migrant")
@@ -176,6 +253,8 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
                                 }
 
                             }
+
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -191,6 +270,10 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
         map = googleMap;
 
         loc = new com.google.android.gms.maps.model.LatLng(myLat, myLong);
+
+//        map.clear();
+
+        getData(); // Made it so that data is received from firebase only if map is created & after that within getData() function, the map markers are added. So 1st map is loaded, then data for markers
 
         Log.d(TAG, String.valueOf(loc));
 //        Toast.makeText(getApplicationContext(), loc.toString(), Toast.LENGTH_SHORT).show();
@@ -210,6 +293,26 @@ public class MigrantTrackingActivity extends AppCompatActivity implements OnMapR
         map.addMarker(markerOptions);
         map.moveCamera(CameraUpdateFactory.newLatLng(loc));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+
+//        for(int i = 0; i < migrants.size(); i++)
+//        {
+//            MigrantClass migrantClass = migrants.get(i);
+//
+//            String lat = migrants.get(i).getLat();
+//            String lng = migrants.get(i).getLng();
+//
+//            Double latitude = Double.valueOf(lat);
+//            Double longitude = Double.valueOf(lng);
+//
+//            LatLng migrantLoc = new LatLng(latitude, longitude);
+//
+//            migrantMarkerOptions = new MarkerOptions().position(migrantLoc)
+//                    .title("Migrant")
+////                    .draggable(true)
+//                    .icon(BitmapDescriptorFactory
+//                            .defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//            map.addMarker(migrantMarkerOptions).setTag(migrantClass); //https://developers.google.com/maps/documentation/android-sdk/marker
+//        }
 
 
         //https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/gms/java/com/example/mapdemo/MarkerDemoActivity.java

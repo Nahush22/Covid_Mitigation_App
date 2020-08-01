@@ -19,6 +19,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/searchHospCard"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -52,6 +54,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/searchPharmCard"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

@@ -58,6 +58,8 @@
             android:text="Order Items"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

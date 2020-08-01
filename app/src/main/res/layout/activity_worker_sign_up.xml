@@ -134,6 +134,8 @@
                 android:layout_marginTop="8dp"
                 android:background="#58595C"
                 android:padding="4dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:text="Choose Image"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
