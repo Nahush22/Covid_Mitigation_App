@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBkgd"
+    android:padding="25dp"
+    android:gravity="center"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20dp"
+            app:cardBackgroundColor="#2C2A2A"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="35dp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:gravity="center"
+                    android:text="DOCTOR"
+                    android:textColor="@android:color/white"
+                    android:textSize="35dp" />
+
+                <EditText
+                    android:id="@+id/materialDocName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edit_back"
+                    android:hint="Name"
+                    android:inputType="text"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/darker_gray" />
+
+
+                <EditText
+                    android:id="@+id/materialDocAddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edit_back"
+                    android:hint="Clinic Address"
+                    android:inputType="text"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <EditText
+                    android:id="@+id/materialDocProf"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edit_back"
+                    android:hint="Domain/Speciality"
+                    android:inputType="text"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <EditText
+                    android:id="@+id/materialDocClinicName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edit_back"
+                    android:hint="Hospital/Clinic Name"
+                    android:inputType="text"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <EditText
+                    android:id="@+id/materialDocNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edit_back"
+                    android:hint="Contact Number"
+                    android:inputType="number"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <EditText
+                    android:id="@+id/materialDocId"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edit_back"
+                    android:hint="Profession Id"
+                    android:inputType="text"
+                    android:paddingLeft="15dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <ProgressBar
+                    android:id="@+id/materialDoctorProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="13dp"
+                    android:paddingBottom="5dp"
+                    android:text="Visit At:"
+                    android:textColor="@color/ic_launcher_background"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="27dp"
+                        android:paddingLeft="6dp"
+                        android:paddingBottom="5dp"
+                        android:text="From:"
+                        android:layout_gravity="left"
+                        android:textColor="@color/ic_launcher_background"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/materialDocFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:ems="11"
+                        android:inputType="textPersonName"
+                        android:text="9"
+                        android:textAlignment="textEnd"
+                        android:background="@drawable/edit_back"
+                        android:layout_marginLeft="4dp"
+                        android:paddingRight="36dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:inputType="textPersonName"
+                        android:text="Hrs"
+                        android:textAlignment="textEnd"
+                        android:background="@drawable/edit_back"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginLeft="-36dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/materialDocFromAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="#FFFFFF"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/materialDocFromSub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginRight="4dp"
+                        android:background="#FFFFFF"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="-" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="27dp"
+                        android:paddingLeft="13dp"
+                        android:paddingBottom="5dp"
+                        android:text="To:"
+                        android:layout_gravity="left"
+                        android:textColor="@color/ic_launcher_background"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/materialDocTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:ems="12"
+                        android:inputType="textPersonName"
+                        android:text="10"
+                        android:textAlignment="textEnd"
+                        android:background="@drawable/edit_back"
+                        android:layout_marginLeft="4dp"
+                        android:paddingRight="36dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:inputType="textPersonName"
+                        android:text="Hrs"
+                        android:textAlignment="textEnd"
+                        android:background="@drawable/edit_back"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginLeft="-36dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/materialDocToAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="#FFFFFF"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="+" />
+
+                    <TextView
+                        android:id="@+id/materialDocToSub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginRight="4dp"
+                        android:background="#FFFFFF"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="-" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/materialDocImg"
+                    android:layout_width="143dp"
+                    android:layout_height="142dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/doctorChooseImg"
+                    app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+                <Button
+                    android:id="@+id/materialDocSelectImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/doctor_select_img_btn"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="Select Image"
+                    android:textColor="@android:color/white" />
+
+                <!--        <TextView-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_gravity="right"-->
+                <!--            android:layout_marginBottom="55dp"-->
+                <!--            android:text="Forgot Password?"-->
+                <!--            android:textColor="@android:color/darker_gray"-->
+                <!--            android:textSize="17dp" />-->
+
+                <Button
+                    android:id="@+id/materialDocReg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/button_back"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="Register"
+                    android:textColor="@android:color/white" />
+
+                <!--        <LinearLayout-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:gravity="center"-->
+                <!--            android:orientation="horizontal">-->
+
+                <!--            <TextView-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:text="Don't have an account?"-->
+                <!--                android:textColor="@android:color/darker_gray"-->
+                <!--                android:textSize="17dp" />-->
+
+                <!--            <TextView-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:text=" Register"-->
+                <!--                android:textColor="@color/colorReg"-->
+                <!--                android:textSize="17dp" />-->
+
+                <!--        </LinearLayout>-->
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+

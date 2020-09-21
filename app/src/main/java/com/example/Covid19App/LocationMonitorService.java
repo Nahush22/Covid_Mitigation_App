@@ -75,6 +75,8 @@ public class LocationMonitorService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+//        Toast.makeText(this, "Inside LocationMonitorService", Toast.LENGTH_SHORT).show();
+
 //        https://stackoverflow.com/questions/5265913/how-to-use-putextra-and-getextra-for-string-data
 
         getUserID();

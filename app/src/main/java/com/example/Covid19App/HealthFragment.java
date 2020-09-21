@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 public class HealthFragment extends Fragment {
 
-    CardView finderCard, labCard, virusCard, faqCard;
+    CardView finderCard, labCard, virusCard, faqCard, doctorCard;
 
     @Nullable
     @Override
@@ -29,6 +29,7 @@ public class HealthFragment extends Fragment {
         labCard = view.findViewById(R.id.labCard);
         virusCard = view.findViewById(R.id.virusCard);
         faqCard = view.findViewById(R.id.faqCard);
+        doctorCard = view.findViewById(R.id.doctorCard);
 
         finderCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +56,13 @@ public class HealthFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), FaqActivity.class));
+            }
+        });
+
+        doctorCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AppointmentActivity.class));
             }
         });
     }

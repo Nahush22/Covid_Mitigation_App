@@ -154,7 +154,6 @@ public class WorkerSignUp extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void checkDb() {

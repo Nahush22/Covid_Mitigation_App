@@ -3,4 +3,17 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorwhite">#ffffff</color>
+
+    <color name="colorBkgd">#343434</color>
+    <color name="colorEdt">#1a1a1a</color>
+    <color name="colorReg">#f5b716</color>
+
+    <color name="volLocBlueBtn">#6C7FED</color>
+
+    <color name="volAcceptBtn">#229E61</color>
+    <color name="volDenyBtn">#802103</color>
+    <color name="volCompletedBtn">#651FFF</color>
+
 </resources>

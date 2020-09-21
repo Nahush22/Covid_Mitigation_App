@@ -9,7 +9,7 @@ import android.view.View;
 
 public class RequestsActivity extends AppCompatActivity {
 
-    CardView complCard, servCard, workerSignUpReqCard;
+    CardView complCard, servCard, workerSignUpReqCard, doctorReqCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,7 @@ public class RequestsActivity extends AppCompatActivity {
         complCard = findViewById(R.id.volunteerReqCard);
         servCard = findViewById(R.id.servicePassReqCard);
         workerSignUpReqCard = findViewById(R.id.workerSignUpReqCard);
+        doctorReqCard = findViewById(R.id.doctorReqCard);
 
         complCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +39,13 @@ public class RequestsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RequestsActivity.this, WorkerRequestList.class));
+            }
+        });
+
+        doctorReqCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RequestsActivity.this, DoctorRequestList.class));
             }
         });
     }

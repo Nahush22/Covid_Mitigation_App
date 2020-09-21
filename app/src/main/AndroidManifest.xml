@@ -19,6 +19,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +28,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MigrantDetails"></activity>
+        <activity android:name=".MaterialVolunteerTaskActivity"></activity>
+        <activity android:name=".MaterialVolunteerSignUp" />
+        <activity android:name=".MaterialVolunteerMapActivity" />
+        <activity android:name=".AppointmentActivity" />
+        <activity android:name=".VisitStatusList" />
+        <activity android:name=".PatientRegActivity" />
+        <activity android:name=".DoctorList" />
+        <activity android:name=".DoctorDetails" />
+        <activity android:name=".DoctorRequestList" />
+        <activity android:name=".DoctorReqStatus" />
+        <activity android:name=".PatientRequestList" />
+        <activity android:name=".DoctorLocationActivity" />
+        <activity android:name=".DoctorSignUp" />
+        <activity android:name=".MigrantDetails" />
         <activity android:name=".MigrantTrackingActivity" />
         <activity android:name=".MigrantLocationSignUp" />
         <activity android:name=".MigrantSignUp" />
@@ -39,22 +53,17 @@
         <activity android:name=".WorkerRequestList" />
         <activity android:name=".WorkerTaskActivity" />
         <activity android:name=".WorkerLocation" />
-        <activity android:name="com.example.sellermodule.WorkerLocationActivity" />
         <activity android:name=".WorkerSignUp" />
         <activity
             android:name=".VideoPlayerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".VideoListActivity" />
         <activity android:name=".PlayListActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".App_Home" />
+        <activity android:name=".SearchActivity" /> <!-- <activity android:name=".App_Home" /> -->
         <activity
-            android:name=".AppHomePage"
+            android:name=".App_Home"
             android:label="@string/title_activity_app_home_page"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainNavigation"
-            android:label="@string/title_activity_main_navigation" />
         <activity android:name=".SymptomsActivity" />
         <activity android:name=".FaqActivity" />
         <activity android:name=".BasicsList" />
@@ -64,7 +73,6 @@
         <activity android:name=".EssentialServicePassList" />
         <activity android:name=".EssentialServiceActvity" />
         <activity android:name=".PassActivity" />
-        <activity android:name=".EssentialServiceActivity" />
         <activity android:name=".LabDetails" />
         <activity android:name=".TestLabsActivity" />
         <activity android:name=".TravelQR" />
@@ -105,7 +113,9 @@
         </activity>
         <activity android:name=".AdminSetTask" />
         <activity android:name=".VolunteerList" />
-        <activity android:name=".VolunteerTaskActivity" />
+        <activity
+            android:name=".VolunteerTaskActivity"
+            android:parentActivityName=".App_Home"></activity>
         <activity android:name=".VolunteerSignUp" />
         <activity android:name=".AdminScanner" />
         <activity android:name=".AdminFunctionsActivity" />
@@ -121,16 +131,12 @@
             android:name=".FinderActivity"
             android:label="@string/title_activity_finder" />
         <activity android:name=".receiptDisplayActivity" />
-        <activity android:name=".userProductList" />
-        <activity android:name=".LauncherActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity android:name=".userProductList" /> <!-- <activity android:name=".LauncherActivity"> -->
+        <!-- &lt;!&ndash; <intent-filter> &ndash;&gt; -->
+        <!-- &lt;!&ndash; <action android:name="android.intent.action.MAIN" /> &ndash;&gt; -->
+        <!-- &lt;!&ndash; <category android:name="android.intent.category.LAUNCHER" /> &ndash;&gt; -->
+        <!-- &lt;!&ndash; </intent-filter> &ndash;&gt; -->
+        <!-- </activity> -->
         <activity android:name=".MainStoreActivity" />
         <activity android:name=".productUpdateTest" />
         <activity android:name=".StoreProductUpdateActivity" />

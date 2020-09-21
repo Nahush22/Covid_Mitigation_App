@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -536,7 +537,22 @@ public class userProductList extends AppCompatActivity {
                         serviceIntent.putExtra("storeId", storeProductLocation);
                         serviceIntent.putExtra("transacId", transacId);
 
-                        ContextCompat.startForegroundService(userProductList.this, serviceIntent);
+//                        ContextCompat.startForegroundService(userProductList.this, serviceIntent);
+
+//                        Toast.makeText(userProductList.this, "Inside alert function", Toast.LENGTH_SHORT).show();
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+//                            Toast.makeText(userProductList.this, "Inside greater than Oreo condn", Toast.LENGTH_SHORT).show();
+
+                            startForegroundService(serviceIntent);
+                        } else {
+
+//                            Toast.makeText(userProductList.this, "Inside lesser than Oreo condn", Toast.LENGTH_SHORT).show();
+
+                            startService(serviceIntent);
+                        }
+
 
                         Toast.makeText(getApplicationContext(), "Items Ordered successfully", Toast.LENGTH_LONG).show();
 

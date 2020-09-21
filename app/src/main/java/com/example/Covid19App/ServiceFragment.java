@@ -51,7 +51,7 @@ public class ServiceFragment extends Fragment {
         volunteerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VolunteerSignUp.class));
+                startActivity(new Intent(getActivity(), MaterialVolunteerSignUp.class));
             }
         });
 
